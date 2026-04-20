@@ -8,7 +8,5 @@
     "amount": 100,
     "tag": "tconstruct:molten_amethyst"
   },
-  "result": {
-    "tag": "c:gems/amethyst"
-  }
+  "result": "minecraft:amethyst_shard"
 }

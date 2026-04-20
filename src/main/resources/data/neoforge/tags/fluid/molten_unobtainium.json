@@ -7,6 +7,9 @@
   ],
   "replace": false,
   "values": [
-    "allthemodium:molten_unobtainium"
+    {
+      "id": "allthemodium:molten_unobtainium",
+      "required": false
+    }
   ]
 }

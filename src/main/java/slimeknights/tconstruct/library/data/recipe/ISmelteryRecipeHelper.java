@@ -2,6 +2,7 @@ package slimeknights.tconstruct.library.data.recipe;
 
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluid;
@@ -197,7 +198,7 @@ public interface ISmelteryRecipeHelper extends ICastCreationHelper {
     if (optional) {
       consumer = withCondition(consumer, tagCondition(tagName));
     }
-    castingWithCast(consumer, fluid, amount, cast, ItemOutput.fromTag(getItemTag(COMMON, tagName)), recipeName);
+    castingWithCast(consumer, fluid, amount, cast, SmelteryRecipeBuilder.castingOutput(tagName, fluid.getId()), recipeName);
   }
 
   /**
@@ -287,7 +288,7 @@ public interface ISmelteryRecipeHelper extends ICastCreationHelper {
     tagCasting(consumer, fluid, FluidValues.INGOT / 2, TinkerSmeltery.wireCast, "wires/" + name, folder + name + "/wire", true);
     // block
     RecipeOutput wrapped = forceStandard ? consumer : withCondition(consumer, tagCondition("storage_blocks/" + name));
-    ItemCastingRecipeBuilder.basinRecipe(getItemTag(COMMON, "storage_blocks/" + name))
+    ItemCastingRecipeBuilder.basinRecipe(SmelteryRecipeBuilder.castingOutput("storage_blocks/" + name, fluid.getId()))
                             .setFluidAndTime(fluid, FluidValues.METAL_BLOCK)
                             .save(wrapped, location(folder + name + "/block"));
   }

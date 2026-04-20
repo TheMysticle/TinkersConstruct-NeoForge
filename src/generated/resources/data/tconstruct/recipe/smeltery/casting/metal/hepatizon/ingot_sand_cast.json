@@ -9,7 +9,5 @@
     "amount": 90,
     "tag": "forge:molten_hepatizon"
   },
-  "result": {
-    "tag": "c:ingots/hepatizon"
-  }
+  "result": "tconstruct:hepatizon_ingot"
 }

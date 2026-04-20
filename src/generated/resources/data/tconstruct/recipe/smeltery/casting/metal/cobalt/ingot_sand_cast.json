@@ -9,7 +9,5 @@
     "amount": 90,
     "tag": "forge:molten_cobalt"
   },
-  "result": {
-    "tag": "c:ingots/cobalt"
-  }
+  "result": "tconstruct:cobalt_ingot"
 }

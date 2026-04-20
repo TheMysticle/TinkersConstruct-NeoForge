@@ -9,7 +9,5 @@
     "amount": 10,
     "tag": "tconstruct:molten_cinderslime"
   },
-  "result": {
-    "tag": "c:nuggets/cinderslime"
-  }
+  "result": "tconstruct:cinderslime_nugget"
 }

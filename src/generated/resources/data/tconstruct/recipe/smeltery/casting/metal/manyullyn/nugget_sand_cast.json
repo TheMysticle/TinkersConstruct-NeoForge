@@ -9,7 +9,5 @@
     "amount": 10,
     "tag": "forge:molten_manyullyn"
   },
-  "result": {
-    "tag": "c:nuggets/manyullyn"
-  }
+  "result": "tconstruct:manyullyn_nugget"
 }

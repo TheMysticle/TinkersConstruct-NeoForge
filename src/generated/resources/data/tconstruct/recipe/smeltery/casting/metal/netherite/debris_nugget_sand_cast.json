@@ -9,7 +9,5 @@
     "amount": 10,
     "tag": "tconstruct:molten_debris"
   },
-  "result": {
-    "tag": "forge:nuggets/netherite_scrap"
-  }
+  "result": "tconstruct:debris_nugget"
 }

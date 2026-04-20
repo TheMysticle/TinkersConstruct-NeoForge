@@ -9,7 +9,5 @@
     "amount": 90,
     "tag": "forge:molten_steel"
   },
-  "result": {
-    "tag": "c:ingots/steel"
-  }
+  "result": "tconstruct:steel_ingot"
 }

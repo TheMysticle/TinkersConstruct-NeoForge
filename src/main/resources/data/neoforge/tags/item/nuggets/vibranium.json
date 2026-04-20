@@ -7,6 +7,9 @@
   ],
   "replace": false,
   "values": [
-    "#c:nuggets/vibranium"
+    {
+      "id": "c:nuggets/vibranium",
+      "required": false
+    }
   ]
 }

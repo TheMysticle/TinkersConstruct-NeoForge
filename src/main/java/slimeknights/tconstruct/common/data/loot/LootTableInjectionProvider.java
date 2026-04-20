@@ -10,8 +10,11 @@ import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunct
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemDamageFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.neoforged.neoforge.common.conditions.AndCondition;
 import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.common.conditions.ItemExistsCondition;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import slimeknights.mantle.data.predicate.IJsonPredicate;
@@ -33,6 +36,8 @@ import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.tools.TinkerTools;
 import slimeknights.tconstruct.world.TinkerWorld;
 import slimeknights.tconstruct.world.block.FoliageType;
+
+import java.util.List;
 
 /** Add all relevant loot to loot tables */
 public class LootTableInjectionProvider extends AbstractLootTableInjectionProvider {
@@ -202,14 +207,16 @@ public class LootTableInjectionProvider extends AbstractLootTableInjectionProvid
 
     // twilight forest - minotaur axe
     String tf = "twilightforest";
-    ICondition tfLoaded = new ModLoadedCondition(tf);
-    LootPoolEntryContainer minotaurAxe = LootItem.lootTableItem(FakeRegistryEntry.item(TinkerTools.minotaurAxe.getId()))
-      .setWeight(1) // TF tends to use 1 for its weight
-      .apply(ancientToolData3)
-      .build();
-    inject("labyrinth_room", ResourceLocation.fromNamespaceAndPath(tf, "chests/labyrinth_room"), tfLoaded)
-      .addToPool("pool1", minotaurAxe)
-      .addToPool("pool2", minotaurAxe);
+    if (ModList.get().isLoaded(tf)) {
+      ICondition tfLoaded = new AndCondition(List.of(new ModLoadedCondition(tf), new ItemExistsCondition(TinkerTools.minotaurAxe.getId())));
+      LootPoolEntryContainer minotaurAxe = LootItem.lootTableItem(FakeRegistryEntry.item(TinkerTools.minotaurAxe.getId()))
+        .setWeight(1) // TF tends to use 1 for its weight
+        .apply(ancientToolData3)
+        .build();
+      inject("labyrinth_room", ResourceLocation.fromNamespaceAndPath(tf, "chests/labyrinth_room"), tfLoaded)
+        .addToPool("pool1", minotaurAxe)
+        .addToPool("pool2", minotaurAxe);
+    }
   }
 
   @Override

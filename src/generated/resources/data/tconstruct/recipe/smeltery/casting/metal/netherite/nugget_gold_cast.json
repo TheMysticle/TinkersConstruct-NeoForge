@@ -8,7 +8,5 @@
     "amount": 10,
     "tag": "forge:molten_netherite"
   },
-  "result": {
-    "tag": "c:nuggets/netherite"
-  }
+  "result": "tconstruct:netherite_nugget"
 }

@@ -9,7 +9,5 @@
     "amount": 10,
     "tag": "forge:molten_steel"
   },
-  "result": {
-    "tag": "c:nuggets/steel"
-  }
+  "result": "tconstruct:steel_nugget"
 }

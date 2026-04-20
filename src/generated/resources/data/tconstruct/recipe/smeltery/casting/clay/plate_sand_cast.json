@@ -16,6 +16,6 @@
     "tag": "tconstruct:molten_clay"
   },
   "result": {
-    "tag": "forge:plates/brick"
+    "tag": "c:plates/brick"
   }
 }

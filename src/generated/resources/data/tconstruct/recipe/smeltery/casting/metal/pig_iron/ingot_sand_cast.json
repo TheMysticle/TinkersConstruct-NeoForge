@@ -9,7 +9,5 @@
     "amount": 90,
     "tag": "tconstruct:molten_pig_iron"
   },
-  "result": {
-    "tag": "c:ingots/pig_iron"
-  }
+  "result": "tconstruct:pig_iron_ingot"
 }

@@ -7,6 +7,9 @@
   ],
   "replace": false,
   "values": [
-    "allthemodium:molten_vibranium"
+    {
+      "id": "allthemodium:molten_vibranium",
+      "required": false
+    }
   ]
 }

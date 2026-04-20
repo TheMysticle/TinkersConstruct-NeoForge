@@ -10,7 +10,7 @@
     },
     "T": {
       "type": "tconstruct:no_container",
-      "children": [
+      "match": [
         {
           "item": "tconstruct:scorched_ingot_gauge"
         },

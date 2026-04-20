@@ -9,7 +9,5 @@
     "amount": 10,
     "tag": "tconstruct:molten_slimesteel"
   },
-  "result": {
-    "tag": "c:nuggets/slimesteel"
-  }
+  "result": "tconstruct:slimesteel_nugget"
 }

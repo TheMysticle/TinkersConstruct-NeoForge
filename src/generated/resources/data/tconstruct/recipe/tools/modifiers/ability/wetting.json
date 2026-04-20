@@ -7,7 +7,9 @@
     },
     {
       "type": "tconstruct:no_container",
-      "tag": "tconstruct:tanks"
+      "match": {
+        "tag": "tconstruct:tanks"
+      }
     },
     {
       "tag": "c:dusts/redstone"

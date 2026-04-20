@@ -1,5 +1,6 @@
 package slimeknights.tconstruct.tools.data;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.fluids.FluidType;
 import slimeknights.mantle.data.predicate.IJsonPredicate;
 import slimeknights.mantle.data.predicate.block.BlockPredicate;
@@ -80,6 +82,18 @@ import slimeknights.tconstruct.world.block.DirtType;
 import java.util.function.Function;
 
 public class FluidEffectProvider extends AbstractFluidEffectProvider {
+  private static boolean hasMobEffect(ResourceLocation id) {
+    return BuiltInRegistries.MOB_EFFECT.containsKey(id);
+  }
+
+  private static boolean hasBlock(ResourceLocation id) {
+    return BuiltInRegistries.BLOCK.containsKey(id);
+  }
+
+  private static boolean hasFluid(ResourceLocation id) {
+    return BuiltInRegistries.FLUID.containsKey(id);
+  }
+
   public FluidEffectProvider(PackOutput packOutput) {
     super(packOutput, TConstruct.MOD_ID);
   }
@@ -297,25 +311,39 @@ public class FluidEffectProvider extends AbstractFluidEffectProvider {
       .addEntityEffects(FluidMobEffect.builder().effect(MobEffects.CONFUSION, 5 * 20, 1).buildEntity(TimeAction.ADD));
     {
       String ie = "immersiveengineering";
-      MobEffect flammable = FakeRegistryEntry.effect(ResourceLocation.fromNamespaceAndPath(ie, "flammable"));
-      compatFluid(ie, "creosote",  50)
-        .addEffect(FluidMobEffect.builder().effect(flammable, 8 * 20, 1), TimeAction.ADD)
-        .addEntityEffect(new FireFluidEffect(TimeAction.ADD, 8));
-      compatFluid(ie, "biodiesel", 50)
-        .addEffect(FluidMobEffect.builder().effect(flammable, 8 * 20, 2), TimeAction.ADD)
-        .addEntityEffect(new FireFluidEffect(TimeAction.ADD, 8));
-      FluidMobEffect conductive = new FluidMobEffect(FakeRegistryEntry.effect(ResourceLocation.fromNamespaceAndPath(ie, "conductive")), 8 * 20, 2);
-      compatFluid(ie, "redstone_acid",  50)
-        .addEntityEffect(new MobEffectFluidEffect(conductive, TimeAction.ADD))
-        .addBlockEffect(new MobEffectCloudFluidEffect(conductive))
-        .addBlockEffect(FluidEffect.WEATHER);
-      compatFluid(ie, "phenolic_resin", 50).addEffect(FluidMobEffect.builder().effect(FakeRegistryEntry.effect(ResourceLocation.fromNamespaceAndPath(ie, "sticky")), 8 * 20, 2), TimeAction.ADD);
-      Block concreteSprayed = FakeRegistryEntry.block(ResourceLocation.fromNamespaceAndPath(ie, "concrete_sprayed"));
-      AreaMobEffectFluidEffect concreteFeet = new AreaMobEffectFluidEffect(new FluidMobEffect(FakeRegistryEntry.effect(ResourceLocation.fromNamespaceAndPath(ie, "concrete_feet")), MobEffectInstance.INFINITE_DURATION, 1), TimeAction.SET, GroupCost.MAX);
-      compatFluid(ie, "concrete", 100)
-        .addEntityEffect(new BlockAtEntityPredicate(BlockPredicate.CAN_BE_REPLACED, 0), new SetBlockFluidEffect(concreteSprayed))
-        .offsetBlockEffect(BlockPredicate.CAN_BE_REPLACED, new SetBlockFluidEffect(concreteSprayed))
-        .addEntityEffect(concreteFeet).offsetBlockEffect(concreteFeet);
+      ResourceLocation flammableId = ResourceLocation.fromNamespaceAndPath(ie, "flammable");
+      ResourceLocation conductiveId = ResourceLocation.fromNamespaceAndPath(ie, "conductive");
+      ResourceLocation stickyId = ResourceLocation.fromNamespaceAndPath(ie, "sticky");
+      ResourceLocation concreteSprayedId = ResourceLocation.fromNamespaceAndPath(ie, "concrete_sprayed");
+      ResourceLocation concreteFeetId = ResourceLocation.fromNamespaceAndPath(ie, "concrete_feet");
+      if (ModList.get().isLoaded(ie) && hasMobEffect(flammableId)) {
+        MobEffect flammable = FakeRegistryEntry.effect(flammableId);
+        compatFluid(ie, "creosote",  50)
+          .addEffect(FluidMobEffect.builder().effect(flammable, 8 * 20, 1), TimeAction.ADD)
+          .addEntityEffect(new FireFluidEffect(TimeAction.ADD, 8));
+        compatFluid(ie, "biodiesel", 50)
+          .addEffect(FluidMobEffect.builder().effect(flammable, 8 * 20, 2), TimeAction.ADD)
+          .addEntityEffect(new FireFluidEffect(TimeAction.ADD, 8));
+      }
+      if (ModList.get().isLoaded(ie) && hasMobEffect(conductiveId)) {
+        FluidMobEffect conductive = new FluidMobEffect(FakeRegistryEntry.effect(conductiveId), 8 * 20, 2);
+        compatFluid(ie, "redstone_acid",  50)
+          .addEntityEffect(new MobEffectFluidEffect(conductive, TimeAction.ADD))
+          .addBlockEffect(new MobEffectCloudFluidEffect(conductive))
+          .addBlockEffect(FluidEffect.WEATHER);
+      }
+      if (ModList.get().isLoaded(ie) && hasMobEffect(stickyId)) {
+        compatFluid(ie, "phenolic_resin", 50)
+          .addEffect(FluidMobEffect.builder().effect(FakeRegistryEntry.effect(stickyId), 8 * 20, 2), TimeAction.ADD);
+      }
+      if (ModList.get().isLoaded(ie) && hasBlock(concreteSprayedId) && hasMobEffect(concreteFeetId)) {
+        Block concreteSprayed = FakeRegistryEntry.block(concreteSprayedId);
+        AreaMobEffectFluidEffect concreteFeet = new AreaMobEffectFluidEffect(new FluidMobEffect(FakeRegistryEntry.effect(concreteFeetId), MobEffectInstance.INFINITE_DURATION, 1), TimeAction.SET, GroupCost.MAX);
+        compatFluid(ie, "concrete", 100)
+          .addEntityEffect(new BlockAtEntityPredicate(BlockPredicate.CAN_BE_REPLACED, 0), new SetBlockFluidEffect(concreteSprayed))
+          .offsetBlockEffect(BlockPredicate.CAN_BE_REPLACED, new SetBlockFluidEffect(concreteSprayed))
+          .addEntityEffect(concreteFeet).offsetBlockEffect(concreteFeet);
+      }
     }
 
     // twilight forest compat
@@ -336,15 +364,18 @@ public class FluidEffectProvider extends AbstractFluidEffectProvider {
       return new TagPredicate(compound);
     };
     String create = "create";
-    addFluid("potion_create", FluidNameIngredient.of(ResourceLocation.fromNamespaceAndPath(create, "potion"), FluidValues.SIP))
-      .hidden() // we have the regular potion type showing, the create one in addition is a bit confusing
-      .addCondition(new ModLoadedCondition(create))
-      .addEntityEffect(new PotionFluidEffect(0.25f, createBottle.apply("REGULAR")))
-      .addEntityEffect(new PotionFluidEffect(0.5f, createBottle.apply("SPLASH")))
-      .addEntityEffect(new PotionFluidEffect(0.75f, createBottle.apply("LINGERING")))
-      .addBlockEffect(new PotionCloudFluidEffect(0.25f, createBottle.apply("REGULAR")))
-      .addBlockEffect(new PotionCloudFluidEffect(0.5f, createBottle.apply("SPLASH")))
-      .addBlockEffect(new PotionCloudFluidEffect(0.75f, createBottle.apply("LINGERING")));
+    ResourceLocation createPotion = ResourceLocation.fromNamespaceAndPath(create, "potion");
+    if (ModList.get().isLoaded(create) && hasFluid(createPotion)) {
+      addFluid("potion_create", FluidNameIngredient.of(createPotion, FluidValues.SIP))
+        .hidden() // we have the regular potion type showing, the create one in addition is a bit confusing
+        .addCondition(new ModLoadedCondition(create))
+        .addEntityEffect(new PotionFluidEffect(0.25f, createBottle.apply("REGULAR")))
+        .addEntityEffect(new PotionFluidEffect(0.5f, createBottle.apply("SPLASH")))
+        .addEntityEffect(new PotionFluidEffect(0.75f, createBottle.apply("LINGERING")))
+        .addBlockEffect(new PotionCloudFluidEffect(0.25f, createBottle.apply("REGULAR")))
+        .addBlockEffect(new PotionCloudFluidEffect(0.5f, createBottle.apply("SPLASH")))
+        .addBlockEffect(new PotionCloudFluidEffect(0.75f, createBottle.apply("LINGERING")));
+    }
   }
 
   @Override

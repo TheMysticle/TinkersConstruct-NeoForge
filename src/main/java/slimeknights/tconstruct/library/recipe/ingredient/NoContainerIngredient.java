@@ -45,6 +45,7 @@ public class NoContainerIngredient extends NestedIngredient {
   /** MapCodec for JSON serialization */
   public static final MapCodec<NoContainerIngredient> CODEC = new MapCodec<>() {
     private static final String MATCH = "match";
+    private static final String CHILDREN = "children";
     private static final String TYPE = "type";
 
     @Override
@@ -58,16 +59,20 @@ public class NoContainerIngredient extends NestedIngredient {
       if (match != null) {
         return Ingredient.CODEC_NONEMPTY.parse(ops, match).map(NoContainerIngredient::new);
       }
+      T children = input.get(CHILDREN);
+      if (children != null) {
+        return Ingredient.CODEC_NONEMPTY.parse(ops, children).map(NoContainerIngredient::new);
+      }
       return Ingredient.CODEC_NONEMPTY.parse(ops, ops.createMap(input.entries().filter(entry -> {
         DataResult<String> key = ops.getStringValue(entry.getFirst());
-        return key.result().filter(name -> name.equals(MATCH) || name.equals(TYPE)).isEmpty();
+        return key.result().filter(name -> name.equals(MATCH) || name.equals(CHILDREN) || name.equals(TYPE)).isEmpty();
       })))
                                             .map(NoContainerIngredient::new);
     }
 
     @Override
     public <T> RecordBuilder<T> encode(NoContainerIngredient ingredient, DynamicOps<T> ops, RecordBuilder<T> prefix) {
-      return Ingredient.MAP_CODEC_NONEMPTY.encode(ingredient.nested, ops, prefix);
+      return prefix.add(MATCH, Ingredient.CODEC_NONEMPTY.encodeStart(ops, ingredient.nested));
     }
   };
 

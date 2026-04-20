@@ -8,7 +8,5 @@
     "amount": 100,
     "tag": "tconstruct:molten_quartz"
   },
-  "result": {
-    "tag": "c:gems/quartz"
-  }
+  "result": "minecraft:quartz"
 }

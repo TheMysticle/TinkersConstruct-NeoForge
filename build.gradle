@@ -668,11 +668,25 @@ tasks.register('syncModernDataPackPaths', Sync) {
             }
 
             File bridgeTag = file("${modernDataPackDir.get().asFile}/data/forge/tags/item/${tagPath}.json")
+            Map<String,Object> bridgeJson = null
+            File commonTag = findExistingTagFile('c', 'item', tagPath)
+            if (commonTag != null) {
+                bridgeJson = [
+                    replace: false,
+                    values : ["#c:${tagPath}"]
+                ]
+            } else {
+                bridgeJson = synthesizeCommonItemTag(tagPath)
+            }
+
+            if (bridgeJson == null || !(bridgeJson.values instanceof Collection) || bridgeJson.values.isEmpty()) {
+                if (bridgeTag.exists()) {
+                    bridgeTag.delete()
+                }
+                return
+            }
+
             bridgeTag.parentFile.mkdirs()
-            Map<String,Object> bridgeJson = [
-                replace: false,
-                values : ["#c:${tagPath}"]
-            ]
             bridgeTag.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(bridgeJson))
         }
 
@@ -685,6 +699,14 @@ tasks.register('syncModernDataPackPaths', Sync) {
             }
 
             File bridgeTag = file("${modernDataPackDir.get().asFile}/data/forge/tags/fluid/${tagPath}.json")
+            File commonTag = findExistingTagFile('c', 'fluid', tagPath)
+            if (commonTag == null) {
+                if (bridgeTag.exists()) {
+                    bridgeTag.delete()
+                }
+                return
+            }
+
             bridgeTag.parentFile.mkdirs()
             Map<String,Object> bridgeJson = [
                 replace: false,
@@ -813,11 +835,14 @@ tasks.register('syncModernDataPackPaths', Sync) {
             String registry = parts[0]
             String tagPath = parts[1]
             Map<String,Object> bridgeJson = synthesizeForgeTag(registry, tagPath)
-            if (bridgeJson == null) {
-                bridgeJson = [replace: false, values: []]
+            File bridgeTag = file("${modernDataPackDir.get().asFile}/data/forge/tags/${registry}/${tagPath}.json")
+            if (bridgeJson == null || !(bridgeJson.values instanceof Collection) || bridgeJson.values.isEmpty()) {
+                if (bridgeTag.exists()) {
+                    bridgeTag.delete()
+                }
+                return
             }
 
-            File bridgeTag = file("${modernDataPackDir.get().asFile}/data/forge/tags/${registry}/${tagPath}.json")
             bridgeTag.parentFile.mkdirs()
             bridgeTag.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(bridgeJson))
         }
@@ -865,11 +890,33 @@ tasks.register('syncModernDataPackPaths', Sync) {
             String registry = parts[0]
             String tagPath = parts[1]
             File bridgeTag = file("${modernDataPackDir.get().asFile}/data/c/tags/${registry}/${tagPath}.json")
+            Map<String,Object> bridgeJson = null
+            if (registry == 'item') {
+                bridgeJson = synthesizeCommonItemTag(tagPath)
+            } else {
+                File forgeTag = findExistingTagFile('forge', registry, tagPath)
+                def parsedForgeTag = readTagValues(forgeTag)
+                if (parsedForgeTag != null) {
+                    String selfReference = "#c:${tagPath}"
+                    List<Object> forgeValues = parsedForgeTag.values.findAll { !isTagSelfReference(it, selfReference) }
+                    if (!forgeValues.isEmpty()) {
+                        bridgeJson = [
+                            replace: parsedForgeTag.replace,
+                            values : forgeValues
+                        ]
+                    }
+                }
+            }
+
+            if (bridgeJson == null || !(bridgeJson.values instanceof Collection) || bridgeJson.values.isEmpty()) {
+                if (bridgeTag.exists()) {
+                    bridgeTag.delete()
+                }
+                return
+            }
+
             bridgeTag.parentFile.mkdirs()
-            bridgeTag.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson([
-                replace: false,
-                values : []
-            ]))
+            bridgeTag.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(bridgeJson))
         }
     }
 }

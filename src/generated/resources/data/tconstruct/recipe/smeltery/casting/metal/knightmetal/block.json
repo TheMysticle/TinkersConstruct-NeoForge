@@ -5,7 +5,5 @@
     "amount": 810,
     "tag": "tconstruct:molten_knightmetal"
   },
-  "result": {
-    "tag": "c:storage_blocks/knightmetal"
-  }
+  "result": "tconstruct:knightmetal_block"
 }

@@ -9,7 +9,5 @@
     "amount": 90,
     "tag": "forge:molten_gold"
   },
-  "result": {
-    "tag": "c:ingots/gold"
-  }
+  "result": "minecraft:gold_ingot"
 }

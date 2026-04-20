@@ -9,7 +9,5 @@
     "amount": 10,
     "tag": "forge:molten_hepatizon"
   },
-  "result": {
-    "tag": "c:nuggets/hepatizon"
-  }
+  "result": "tconstruct:hepatizon_nugget"
 }

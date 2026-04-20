@@ -9,7 +9,5 @@
     "amount": 90,
     "tag": "forge:molten_amethyst_bronze"
   },
-  "result": {
-    "tag": "c:ingots/amethyst_bronze"
-  }
+  "result": "tconstruct:amethyst_bronze_ingot"
 }

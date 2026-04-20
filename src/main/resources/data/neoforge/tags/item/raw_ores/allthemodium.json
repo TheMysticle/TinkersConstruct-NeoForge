@@ -7,6 +7,9 @@
   ],
   "replace": false,
   "values": [
-    "#c:raw_materials/allthemodium"
+    {
+      "id": "c:raw_materials/allthemodium",
+      "required": false
+    }
   ]
 }

@@ -8,7 +8,7 @@
   ],
   "ingredient": {
     "type": "tconstruct:no_container",
-    "children": [
+    "match": [
       {
         "item": "tconstruct:scorched_fuel_gauge"
       },

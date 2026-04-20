@@ -9,7 +9,5 @@
     "amount": 10,
     "tag": "forge:molten_gold"
   },
-  "result": {
-    "tag": "c:nuggets/gold"
-  }
+  "result": "minecraft:gold_nugget"
 }

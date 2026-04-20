@@ -8,7 +8,5 @@
     "amount": 90,
     "tag": "tconstruct:molten_cinderslime"
   },
-  "result": {
-    "tag": "c:ingots/cinderslime"
-  }
+  "result": "tconstruct:cinderslime_ingot"
 }

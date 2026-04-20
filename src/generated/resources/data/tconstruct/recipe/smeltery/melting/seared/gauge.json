@@ -8,7 +8,7 @@
   ],
   "ingredient": {
     "type": "tconstruct:no_container",
-    "children": [
+    "match": [
       {
         "item": "tconstruct:seared_fuel_gauge"
       },

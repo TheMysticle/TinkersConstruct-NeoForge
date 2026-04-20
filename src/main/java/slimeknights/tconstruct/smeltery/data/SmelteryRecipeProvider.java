@@ -1553,7 +1553,7 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
     MeltingRecipeBuilder.melting(Ingredient.of(TinkerCommons.obsidianPane), TinkerFluids.moltenObsidian, FluidValues.GLASS_PANE, 1.5f)
                         .save(consumer, location(folder + "obsidian/pane"));
     MeltingRecipeBuilder.melting(Ingredient.of(Blocks.ENDER_CHEST), TinkerFluids.moltenObsidian, FluidValues.GLASS_BLOCK * 8, 5.0f)
-                        .addByproduct(TinkerFluids.moltenEnder.result(FluidValues.SLIMEBALL))
+                        .addByproduct(new FluidStack(TinkerFluids.moltenEnder.get(), FluidValues.SLIMEBALL))
                         .save(consumer, location(folder + "obsidian/chest"));
     tagMelting(consumer, TinkerFluids.moltenObsidian, FluidValues.GLASS_PANE, "dusts/obsidian", 1.0f, folder + "obsidian/dust", true);
 
@@ -2207,7 +2207,7 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
 
     // melt ender for the molten ender
     EntityMeltingRecipeBuilder.melting(EntityIngredient.of(EntityType.ENDERMAN, EntityType.ENDERMITE, EntityType.ENDER_DRAGON),
-                                       TinkerFluids.moltenEnder.result(FluidValues.SLIMEBALL / 10), 2)
+                                       new FluidStack(TinkerFluids.moltenEnder.get(), FluidValues.SLIMEBALL / 10), 2)
                               .save(consumer, location(folder + "ender"));
     MeltingRecipeBuilder.melting(Ingredient.of(TinkerWorld.heads.get(TinkerHeadType.ENDERMAN)), TinkerFluids.moltenEnder, FluidValues.SLIMEBALL * 2)
                         .save(consumer, location(headFolder + "enderman"));
@@ -2363,7 +2363,7 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
     // immersive engineering - casting treated wood
     String treatedWood = "treated_wood";
     TagKey<Fluid> creosote = getFluidTag(COMMON, "creosote");
-    ItemCastingRecipeBuilder.basinRecipe(ItemOutput.fromTag(getItemTag(COMMON, treatedWood)))
+    ItemCastingRecipeBuilder.basinRecipe(SmelteryRecipeBuilder.castingOutput(treatedWood, ResourceLocation.fromNamespaceAndPath("immersiveengineering", treatedWood)))
                             .setCast(ItemTags.PLANKS, true)
                             .setFluid(creosote, 125)
                             .setCoolingTime(100)
@@ -2571,12 +2571,12 @@ public class SmelteryRecipeProvider extends BaseRecipeProvider implements ISmelt
 
     // refined glowstone composite
     RecipeOutput wrapped = withCondition(consumer, tagCondition("ingots/refined_glowstone"), tagCondition("ingots/osmium"));
-    ItemCastingRecipeBuilder.tableRecipe(ItemOutput.fromTag(getItemTag(COMMON, "ingots/refined_glowstone")))
+    ItemCastingRecipeBuilder.tableRecipe(SmelteryRecipeBuilder.castingOutput("ingots/refined_glowstone", TinkerFluids.moltenRefinedGlowstone.getId()))
                             .setCast(Tags.Items.DUSTS_GLOWSTONE, true)
                             .setFluidAndTime(TinkerFluids.moltenOsmium, FluidValues.INGOT)
                             .save(wrapped, location(folder + "refined_glowstone_ingot"));
     wrapped = withCondition(consumer, tagCondition("ingots/refined_obsidian"), tagCondition("ingots/osmium"));
-    ItemCastingRecipeBuilder.tableRecipe(ItemOutput.fromTag(getItemTag(COMMON, "ingots/refined_obsidian")))
+    ItemCastingRecipeBuilder.tableRecipe(SmelteryRecipeBuilder.castingOutput("ingots/refined_obsidian", TinkerFluids.moltenRefinedObsidian.getId()))
                             .setCast(getItemTag(COMMON, "dusts/refined_obsidian"), true)
                             .setFluidAndTime(TinkerFluids.moltenOsmium, FluidValues.INGOT)
                             .save(wrapped, location(folder + "refined_obsidian_ingot"));

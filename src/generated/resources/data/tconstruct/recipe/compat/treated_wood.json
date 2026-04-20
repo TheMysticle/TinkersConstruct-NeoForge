@@ -21,6 +21,6 @@
     "tag": "forge:creosote"
   },
   "result": {
-    "tag": "forge:treated_wood"
+    "tag": "c:treated_wood"
   }
 }

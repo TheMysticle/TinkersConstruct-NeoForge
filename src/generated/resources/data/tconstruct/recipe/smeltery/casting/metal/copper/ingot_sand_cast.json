@@ -9,7 +9,5 @@
     "amount": 90,
     "tag": "forge:molten_copper"
   },
-  "result": {
-    "tag": "c:ingots/copper"
-  }
+  "result": "minecraft:copper_ingot"
 }

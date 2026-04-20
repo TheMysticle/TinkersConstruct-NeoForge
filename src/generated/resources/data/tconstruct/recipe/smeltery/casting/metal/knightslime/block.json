@@ -5,7 +5,5 @@
     "amount": 810,
     "tag": "tconstruct:molten_knightslime"
   },
-  "result": {
-    "tag": "c:storage_blocks/knightslime"
-  }
+  "result": "tconstruct:knightslime_block"
 }

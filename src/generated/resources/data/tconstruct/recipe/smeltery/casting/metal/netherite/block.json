@@ -5,7 +5,5 @@
     "amount": 810,
     "tag": "forge:molten_netherite"
   },
-  "result": {
-    "tag": "c:storage_blocks/netherite"
-  }
+  "result": "minecraft:netherite_block"
 }

@@ -7,6 +7,9 @@
   ],
   "replace": false,
   "values": [
-    "allthemodium:molten_allthemodium"
+    {
+      "id": "allthemodium:molten_allthemodium",
+      "required": false
+    }
   ]
 }

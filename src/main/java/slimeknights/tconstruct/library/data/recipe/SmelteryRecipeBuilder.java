@@ -26,6 +26,7 @@ import org.jetbrains.annotations.ApiStatus.Internal;
 import slimeknights.mantle.recipe.condition.TagCombinationCondition;
 import slimeknights.mantle.recipe.condition.TagFilledCondition;
 import slimeknights.mantle.recipe.data.ConsumerWrapperBuilder;
+import slimeknights.mantle.recipe.data.ItemNameOutput;
 import slimeknights.mantle.recipe.helper.FluidOutput;
 import slimeknights.mantle.recipe.helper.ItemOutput;
 import slimeknights.mantle.recipe.ingredient.FluidIngredient;
@@ -39,6 +40,9 @@ import slimeknights.tconstruct.library.recipe.melting.MeltingRecipeBuilder;
 import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -228,6 +232,104 @@ public class SmelteryRecipeBuilder {
     return ResourceLocation.fromNamespaceAndPath("c", name);
   }
 
+  /** Creates a concrete casting output for a common tag when we can infer a representative item. */
+  @CheckReturnValue
+  public static ItemOutput castingOutput(String tagName, ResourceLocation preferredName) {
+    ResourceLocation item = findRepresentativeItem(tagName, preferredName);
+    if (item != null) {
+      return ItemNameOutput.fromName(item);
+    }
+    return ItemOutput.fromTag(itemTag(tagName));
+  }
+
+  /** Finds a representative item ID for a common item tag based on common naming conventions. */
+  @Nullable
+  private static ResourceLocation findRepresentativeItem(String tagName, ResourceLocation preferredName) {
+    switch (tagName) {
+      case "gems/amethyst":
+        return ResourceLocation.withDefaultNamespace("amethyst_shard");
+      case "nuggets/netherite_scrap":
+        return ResourceLocation.fromNamespaceAndPath("tconstruct", "debris_nugget");
+      case "ingots/netherite_scrap":
+        return ResourceLocation.withDefaultNamespace("netherite_scrap");
+    }
+
+    int slash = tagName.indexOf('/');
+    if (slash <= 0 || slash >= tagName.length() - 1) {
+      return null;
+    }
+
+    String type = tagName.substring(0, slash);
+    String name = tagName.substring(slash + 1);
+    List<String> candidatePaths = new ArrayList<>();
+    switch (type) {
+      case "ingots" -> {
+        candidatePaths.add(name + "_ingot");
+        candidatePaths.add("ingot_" + name);
+      }
+      case "nuggets" -> {
+        candidatePaths.add(name + "_nugget");
+        candidatePaths.add("nugget_" + name);
+      }
+      case "gems" -> {
+        candidatePaths.add(name);
+        candidatePaths.add(name + "_gem");
+        candidatePaths.add("gem_" + name);
+      }
+      case "storage_blocks" -> {
+        candidatePaths.add(name + "_block");
+        candidatePaths.add("block_" + name);
+        candidatePaths.add(name);
+      }
+      case "plates" -> {
+        candidatePaths.add(name + "_plate");
+        candidatePaths.add("plate_" + name);
+      }
+      case "gears" -> {
+        candidatePaths.add(name + "_gear");
+        candidatePaths.add("gear_" + name);
+      }
+      case "coins" -> {
+        candidatePaths.add(name + "_coin");
+        candidatePaths.add("coin_" + name);
+      }
+      case "rods" -> {
+        candidatePaths.add(name + "_rod");
+        candidatePaths.add("rod_" + name);
+      }
+      case "wires" -> {
+        candidatePaths.add(name + "_wire");
+        candidatePaths.add("wire_" + name);
+      }
+      default -> {
+        return null;
+      }
+    }
+
+    LinkedHashSet<String> preferredNamespaces = new LinkedHashSet<>();
+    preferredNamespaces.add(preferredName.getNamespace());
+    preferredNamespaces.add("tconstruct");
+    preferredNamespaces.add("minecraft");
+
+    for (String namespace : preferredNamespaces) {
+      for (String path : candidatePaths) {
+        ResourceLocation candidate = ResourceLocation.fromNamespaceAndPath(namespace, path);
+        if (BuiltInRegistries.ITEM.containsKey(candidate) && BuiltInRegistries.ITEM.get(candidate) != Items.AIR) {
+          return candidate;
+        }
+      }
+    }
+
+    for (String path : candidatePaths) {
+      for (ResourceLocation candidate : BuiltInRegistries.ITEM.keySet()) {
+        if (candidate.getPath().equals(path) && BuiltInRegistries.ITEM.get(candidate) != Items.AIR) {
+          return candidate;
+        }
+      }
+    }
+    return null;
+  }
+
   /** Creates a location under the given domain with the passed prefix  */
   @CheckReturnValue
   private ResourceLocation location(String folder, String variant) {
@@ -377,7 +479,7 @@ public class SmelteryRecipeBuilder {
       throw new IllegalArgumentException("Cannot cast using a cast for a fluid with byproducts");
     }
     RecipeOutput wrapped = optional || forceOptional ? withCondition(tagCondition(tagName)) : consumer;
-    ItemOutput output = ItemOutput.fromTag(itemTag(tagName));
+    ItemOutput output = castingOutput(tagName, name);
     int amount = (int) (baseUnit * scale);
     FluidIngredient fluid = ingredient(amount);
     ItemCastingRecipeBuilder.tableRecipe(output)
@@ -395,7 +497,7 @@ public class SmelteryRecipeBuilder {
   /** Recipe to composite cast */
   private void tagCasting(float scale, String outputName, Ingredient cast, String tagName, boolean forceOptional) {
     RecipeOutput wrapped = optional || forceOptional ? withCondition(tagCondition(tagName)) : consumer;
-    ItemOutput output = ItemOutput.fromTag(itemTag(tagName));
+    ItemOutput output = castingOutput(tagName, name);
     int amount = (int) (baseUnit * scale);
     FluidIngredient fluid = ingredient(amount);
     ItemCastingRecipeBuilder.tableRecipe(output)
@@ -409,7 +511,7 @@ public class SmelteryRecipeBuilder {
   public SmelteryRecipeBuilder blockCasting(int factor, Ingredient cast, boolean forceOptional) {
     String tagName = "storage_blocks/" + this.name.getPath();
     RecipeOutput wrapped = optional || forceOptional ? withCondition(tagCondition(tagName)) : consumer;
-    ItemCastingRecipeBuilder.basinRecipe(ItemOutput.fromTag(itemTag(tagName)))
+    ItemCastingRecipeBuilder.basinRecipe(castingOutput(tagName, name))
       .setFluid(ingredient(baseUnit * factor))
       .setCoolingTime(temperature, baseUnit * factor)
       .setCast(cast, true)

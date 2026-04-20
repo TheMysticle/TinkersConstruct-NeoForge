@@ -9,7 +9,5 @@
     "amount": 90,
     "tag": "forge:molten_manyullyn"
   },
-  "result": {
-    "tag": "c:ingots/manyullyn"
-  }
+  "result": "tconstruct:manyullyn_ingot"
 }

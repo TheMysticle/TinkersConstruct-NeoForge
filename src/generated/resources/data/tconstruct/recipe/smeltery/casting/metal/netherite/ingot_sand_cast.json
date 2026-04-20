@@ -9,7 +9,5 @@
     "amount": 90,
     "tag": "forge:molten_netherite"
   },
-  "result": {
-    "tag": "c:ingots/netherite"
-  }
+  "result": "minecraft:netherite_ingot"
 }

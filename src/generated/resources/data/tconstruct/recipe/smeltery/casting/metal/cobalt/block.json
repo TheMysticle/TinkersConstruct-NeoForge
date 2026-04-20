@@ -5,7 +5,5 @@
     "amount": 810,
     "tag": "forge:molten_cobalt"
   },
-  "result": {
-    "tag": "c:storage_blocks/cobalt"
-  }
+  "result": "tconstruct:cobalt_block"
 }

@@ -9,7 +9,5 @@
     "amount": 10,
     "tag": "tconstruct:molten_knightslime"
   },
-  "result": {
-    "tag": "c:nuggets/knightslime"
-  }
+  "result": "tconstruct:knightslime_nugget"
 }

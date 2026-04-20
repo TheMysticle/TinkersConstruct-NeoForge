@@ -8,7 +8,5 @@
     "amount": 100,
     "tag": "tconstruct:molten_diamond"
   },
-  "result": {
-    "tag": "c:gems/diamond"
-  }
+  "result": "minecraft:diamond"
 }

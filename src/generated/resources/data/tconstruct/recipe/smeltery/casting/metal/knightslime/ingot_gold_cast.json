@@ -8,7 +8,5 @@
     "amount": 90,
     "tag": "tconstruct:molten_knightslime"
   },
-  "result": {
-    "tag": "c:ingots/knightslime"
-  }
+  "result": "tconstruct:knightslime_ingot"
 }

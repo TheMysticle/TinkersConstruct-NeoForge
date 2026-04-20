@@ -9,7 +9,5 @@
     "amount": 90,
     "tag": "forge:molten_rose_gold"
   },
-  "result": {
-    "tag": "c:ingots/rose_gold"
-  }
+  "result": "tconstruct:rose_gold_ingot"
 }

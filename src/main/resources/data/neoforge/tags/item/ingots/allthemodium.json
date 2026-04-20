@@ -7,6 +7,9 @@
   ],
   "replace": false,
   "values": [
-    "#c:ingots/allthemodium"
+    {
+      "id": "c:ingots/allthemodium",
+      "required": false
+    }
   ]
 }

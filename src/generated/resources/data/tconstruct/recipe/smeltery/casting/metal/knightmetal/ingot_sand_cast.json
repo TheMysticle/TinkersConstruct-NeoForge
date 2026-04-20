@@ -9,7 +9,5 @@
     "amount": 90,
     "tag": "tconstruct:molten_knightmetal"
   },
-  "result": {
-    "tag": "c:ingots/knightmetal"
-  }
+  "result": "tconstruct:knightmetal_ingot"
 }

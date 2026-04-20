@@ -7,6 +7,9 @@
   ],
   "replace": false,
   "values": [
-    "#c:nuggets/allthemodium"
+    {
+      "id": "c:nuggets/allthemodium",
+      "required": false
+    }
   ]
 }
