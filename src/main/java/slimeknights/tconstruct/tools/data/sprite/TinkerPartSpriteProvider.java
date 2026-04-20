@@ -5,6 +5,7 @@ import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.library.client.data.material.AbstractPartSpriteProvider;
 import slimeknights.tconstruct.library.materials.stats.MaterialStatsId;
 import slimeknights.tconstruct.tools.stats.PlatingMaterialStats;
+import slimeknights.tconstruct.tools.stats.SlimeStats;
 import slimeknights.tconstruct.tools.stats.StatlessMaterialStats;
 
 /**
@@ -12,6 +13,14 @@ import slimeknights.tconstruct.tools.stats.StatlessMaterialStats;
  * Do not use both this and {@link TinkerMaterialSpriteProvider} in a single generator for an addon, if you need to use both make two instances of {@link slimeknights.tconstruct.library.client.data.material.MaterialPartTextureGenerator}
  */
 public class TinkerPartSpriteProvider extends AbstractPartSpriteProvider {
+  /** Standard wearable armor slots, excluding BODY for animal armor. */
+  private static final ArmorItem.Type[] WEARABLE_ARMOR_TYPES = {
+    ArmorItem.Type.HELMET,
+    ArmorItem.Type.CHESTPLATE,
+    ArmorItem.Type.LEGGINGS,
+    ArmorItem.Type.BOOTS
+  };
+
   public static final MaterialStatsId WOOD = new MaterialStatsId(TConstruct.MOD_ID, "wood");
   public static final MaterialStatsId SLIMESUIT = new MaterialStatsId(TConstruct.MOD_ID, "slimesuit");
   public static final MaterialStatsId ARMOR_PLATING = new MaterialStatsId(TConstruct.MOD_ID, "armor_plating");
@@ -73,7 +82,7 @@ public class TinkerPartSpriteProvider extends AbstractPartSpriteProvider {
 
     // plate textures
     addPart("maille", StatlessMaterialStats.MAILLE.getIdentifier());
-    for (ArmorItem.Type slot : ArmorItem.Type.values()) {
+    for (ArmorItem.Type slot : WEARABLE_ARMOR_TYPES) {
       buildTool("armor/plate/" + slot.getName()).disallowAnimated() // the armor model won't be animated, so don't animate the item
         .addBreakablePart("plating", PlatingMaterialStats.TYPES.get(slot.ordinal()).getStatId())
         .addBreakablePart("maille", StatlessMaterialStats.MAILLE.getIdentifier());
@@ -95,14 +104,14 @@ public class TinkerPartSpriteProvider extends AbstractPartSpriteProvider {
     addSprite("staff/large_modifiers/tconstruct_embellishment", WOOD);
 
     // slimesuit textures - the armor model won't be animated, so don't animate the item
-    addSprite("armor/slime/skull_modifiers/tconstruct_embellishment", SLIMESUIT).disallowAnimated();
-    addSprite("armor/slime/skull_modifiers/broken/tconstruct_embellishment", SLIMESUIT).disallowAnimated();
-    addSprite("armor/slime/wings_modifiers/tconstruct_embellishment", SLIMESUIT).disallowAnimated();
-    addSprite("armor/slime/wings_modifiers/broken/tconstruct_embellishment", SLIMESUIT).disallowAnimated();
-    addSprite("armor/slime/shell_modifiers/tconstruct_embellishment", SLIMESUIT).disallowAnimated();
-    addSprite("armor/slime/shell_modifiers/broken/tconstruct_embellishment", SLIMESUIT).disallowAnimated();
-    addSprite("armor/slime/boot_modifiers/tconstruct_embellishment", SLIMESUIT).disallowAnimated();
-    addSprite("armor/slime/boot_modifiers/broken/tconstruct_embellishment", SLIMESUIT).disallowAnimated();
+    addSprite("armor/slime/helmet/slime", SlimeStats.ID).disallowAnimated();
+    addSprite("armor/slime/helmet/slime_broken", SlimeStats.ID).disallowAnimated();
+    addSprite("armor/slime/wings/slime", SlimeStats.ID).disallowAnimated();
+    addSprite("armor/slime/wings/slime_broken", SlimeStats.ID).disallowAnimated();
+    addSprite("armor/slime/leggings/slime", SlimeStats.ID).disallowAnimated();
+    addSprite("armor/slime/leggings/slime_broken", SlimeStats.ID).disallowAnimated();
+    addSprite("armor/slime/boots/slime", SlimeStats.ID).disallowAnimated();
+    addSprite("armor/slime/boots/slime_broken", SlimeStats.ID).disallowAnimated();
     addTexture("tinker_armor/slime/armor", SLIMESUIT).disallowAnimated();
     addTexture("tinker_armor/slime/leggings", SLIMESUIT).disallowAnimated();
     addTexture("tinker_armor/slime/wings", SLIMESUIT).disallowAnimated();

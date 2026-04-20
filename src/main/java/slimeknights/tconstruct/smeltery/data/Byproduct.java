@@ -2,6 +2,7 @@ package slimeknights.tconstruct.smeltery.data;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.neoforged.neoforge.fluids.FluidStack;
 import slimeknights.mantle.recipe.helper.FluidOutput;
 import slimeknights.mantle.registration.object.FluidObject;
 import slimeknights.tconstruct.fluids.TinkerFluids;
@@ -60,6 +61,6 @@ public enum Byproduct implements IByproduct {
 
   @Override
   public FluidOutput getFluid(float scale) {
-    return fluid.result((int)(amount * scale));
+    return FluidOutput.fromStack(new FluidStack(fluid.get(), (int)(amount * scale)));
   }
 }

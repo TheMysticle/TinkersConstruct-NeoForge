@@ -103,6 +103,7 @@ import java.util.stream.Stream;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class AdvancementsProvider extends GenericDataProvider {
+  private final CompletableFuture<HolderLookup.Provider> lookupProvider;
 
   /** Advancement consumer instance */
   protected Consumer<AdvancementHolder> advancementConsumer;
@@ -111,8 +112,9 @@ public class AdvancementsProvider extends GenericDataProvider {
   /** The condition for conditional advancements */
   protected ICondition currentCondition;
 
-  public AdvancementsProvider(PackOutput output) {
+  public AdvancementsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
     super(output, Target.DATA_PACK, "advancements");
+    this.lookupProvider = lookupProvider;
   }
 
   @Override
@@ -197,7 +199,7 @@ public class AdvancementsProvider extends GenericDataProvider {
       with.accept(MaterialIds.queensSlime);
       with.accept(MaterialIds.blazingBone);
       with.accept(MaterialIds.blazewood);
-      with.accept(MaterialIds.ancientHide);
+      with.accept(MaterialIds.jeweledHide);
       with.accept(MaterialIds.knightmetal);
       with.accept(MaterialIds.knightslime);
       with.accept(MaterialIds.enderslimeVine);
@@ -321,6 +323,8 @@ public class AdvancementsProvider extends GenericDataProvider {
       with.accept(ModifierIds.crystalshot);
       with.accept(ModifierIds.multishot);
       with.accept(ModifierIds.ballista);
+      with.accept(ModifierIds.slimeball);
+      with.accept(ModifierIds.sliver);
       // fishing
       with.accept(ModifierIds.grapple);
       // throwing
@@ -455,20 +459,29 @@ public class AdvancementsProvider extends GenericDataProvider {
       Consumer<MaterialId> with = mat -> builder.addCriterion(mat.getPath(), InventoryChangeTrigger.TriggerInstance.hasItems(ToolStackItemPredicate.ofContext(
         ToolContextPredicate.and(ToolContextPredicate.set(helmet), new HasMaterialPredicate(mat, 0)))));
       with.accept(MaterialIds.glass);
-      with.accept(MaterialIds.bone);
-      with.accept(MaterialIds.necroticBone);
+      with.accept(MaterialIds.blaze);
+      // zombie
       with.accept(MaterialIds.leather);
-      with.accept(MaterialIds.enderPearl);
-      with.accept(MaterialIds.venombone);
-      with.accept(MaterialIds.string);
-      with.accept(MaterialIds.darkthread);
       with.accept(MaterialIds.iron);
       with.accept(MaterialIds.copper);
-      with.accept(MaterialIds.blazingBone);
+      // spider
+      with.accept(MaterialIds.string);
+      with.accept(MaterialIds.darkthread);
+      // skeleton
+      with.accept(MaterialIds.bone);
+      with.accept(MaterialIds.ice);
+      with.accept(MaterialIds.necroticBone);
+      // piglin
       with.accept(MaterialIds.gold);
       with.accept(MaterialIds.roseGold);
       with.accept(MaterialIds.pigIron);
+      // end
+      with.accept(MaterialIds.enderPearl);
       with.accept(MaterialIds.dragonScale);
+      // crafted
+      with.accept(MaterialIds.venombone);
+      with.accept(MaterialIds.blazingBone);
+      with.accept(MaterialIds.knightmetal);
     });
     builder(TinkerTools.battlesign.get().getRenderTool(), resource("world/ancient_tools"), tinkersGadgetry, AdvancementType.CHALLENGE, builder -> {
       Consumer<ItemObject<?>> with = item -> builder.addCriterion(item.getId().getPath(), hasItem(item));
@@ -508,39 +521,42 @@ public class AdvancementsProvider extends GenericDataProvider {
 
   @Override
   public CompletableFuture<?> run(CachedOutput cache) {
-    Set<ResourceLocation> set = Sets.newHashSet();
-    record Conditional(ResourceLocation id, AdvancementHolder holder, ICondition condition) {}
-    List<AdvancementHolder> advancements = new ArrayList<>();
-    List<Conditional> conditionals = new ArrayList<>();
-    this.advancementConsumer = advancement -> {
-      if (!set.add(advancement.id())) {
-        throw new IllegalStateException("Duplicate advancement " + advancement.id());
-      } else {
-        advancements.add(advancement);
-      }
-    };
-    this.conditionalConsumer = (id, advancement) -> {
-      if (!set.add(id)) {
-        throw new IllegalStateException("Duplicate advancement " + id);
-      } else {
-        conditionals.add(new Conditional(id, advancement, currentCondition));
-      }
-    };
-    generate();
-    return allOf(Stream.concat(
-      advancements.stream().map(advancement -> {
-        JsonElement json = Advancement.CODEC.encodeStart(JsonOps.INSTANCE, advancement.value()).getOrThrow(IllegalStateException::new);
-        return saveJson(cache, advancement.id(), json);
-      }),
-      conditionals.stream().map(conditional -> {
-        JsonElement json = Advancement.CODEC.encodeStart(JsonOps.INSTANCE, conditional.holder.value()).getOrThrow(IllegalStateException::new);
-        // Add conditions to the JSON
-        if (json.isJsonObject()) {
-          ICondition.writeConditions(JsonOps.INSTANCE, json.getAsJsonObject(), List.of(conditional.condition));
+    return lookupProvider.thenCompose(registries -> {
+      Set<ResourceLocation> set = Sets.newHashSet();
+      record Conditional(ResourceLocation id, AdvancementHolder holder, ICondition condition) {}
+      List<AdvancementHolder> advancements = new ArrayList<>();
+      List<Conditional> conditionals = new ArrayList<>();
+      this.advancementConsumer = advancement -> {
+        if (!set.add(advancement.id())) {
+          throw new IllegalStateException("Duplicate advancement " + advancement.id());
+        } else {
+          advancements.add(advancement);
         }
-        return saveJson(cache, conditional.id, json);
-      })
-    ));
+      };
+      this.conditionalConsumer = (id, advancement) -> {
+        if (!set.add(id)) {
+          throw new IllegalStateException("Duplicate advancement " + id);
+        } else {
+          conditionals.add(new Conditional(id, advancement, currentCondition));
+        }
+      };
+      generate();
+      var serializationContext = registries.createSerializationContext(JsonOps.INSTANCE);
+      return allOf(Stream.concat(
+        advancements.stream().map(advancement -> {
+          JsonElement json = Advancement.CODEC.encodeStart(serializationContext, advancement.value()).getOrThrow(IllegalStateException::new);
+          return saveJson(cache, advancement.id(), json);
+        }),
+        conditionals.stream().map(conditional -> {
+          JsonElement json = Advancement.CODEC.encodeStart(serializationContext, conditional.holder.value()).getOrThrow(IllegalStateException::new);
+          // Add conditions to the JSON
+          if (json.isJsonObject()) {
+            ICondition.writeConditions(JsonOps.INSTANCE, json.getAsJsonObject(), List.of(conditional.condition));
+          }
+          return saveJson(cache, conditional.id, json);
+        })
+      ));
+    });
   }
 
 

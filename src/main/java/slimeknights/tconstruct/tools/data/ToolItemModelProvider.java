@@ -13,7 +13,10 @@ import java.io.IOException;
 
 import static slimeknights.tconstruct.TConstruct.getResource;
 
-/** Provider for tool models, mostly used for duplicating displays */
+/**
+ * Provider for tool models, mostly used for duplicating displays
+ * TODO 1.21: move to {@link slimeknights.tconstruct.tools.data.client}
+ */
 public class ToolItemModelProvider extends AbstractToolItemModelProvider {
   public ToolItemModelProvider(PackOutput packOutput, ExistingFileHelper existingFileHelper) {
     super(packOutput, existingFileHelper, TConstruct.MOD_ID);
@@ -49,7 +52,7 @@ public class ToolItemModelProvider extends AbstractToolItemModelProvider {
     armor("travelers", TinkerTools.travelersGear, new Type[] {Type.HELMET},"base", "cuirass", "metal");
     armor("travelers", TinkerTools.travelersGear, new Type[] {Type.CHESTPLATE, Type.LEGGINGS, Type.BOOTS}, "cuirass", "metal");
     armor("plate", TinkerTools.plateArmor, "plating", "maille");
-    armor("slime", TinkerTools.slimesuit, "tool");
+    armor("slime", TinkerTools.slimesuit, "slime");
     // shield
     shield("travelers", TinkerTools.travelersShield, shieldBlocking, "cuirass", "wood");
     shield("plate", TinkerTools.plateShield, readJson(getResource("base/shield_large_blocking")), "plating", "core");

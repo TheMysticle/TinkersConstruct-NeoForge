@@ -349,8 +349,11 @@ public class TinkerTags {
 
     /** Stones that can be used for stoneshield */
     public static final TagKey<Item> STONESHIELDS = local("stoneshields");
-    /** Items that can be consumed for a blaze slimeskull to shoot a fireball */
+    /** @deprecated Modifier using this tag is planned for removal. See {@link slimeknights.tconstruct.tools.modules.interaction.FireballModule} for replacement. */
+    @Deprecated
     public static final TagKey<Item> FIREBALLS = local("fireballs");
+    /** Items that can be consumed for a blaze slimeskull to shoot a fireball */
+    public static final TagKey<Item> SLIMEBALL_AMMO = local("slimeball_ammo");
     /** Items in this tag cannot be placed inside tool inventories */
     public static final TagKey<Item> TOOL_INVENTORY_BLACKLIST = local("inventory_blacklist");
     /** List of blocks that should produce bonus gold nugget drops from the chrysophilite modifier. Will only drop bonus if the block does not drop itself */
@@ -480,18 +483,27 @@ public class TinkerTags {
     public static final TagKey<Item> RANGED = local("modifiable/ranged");
     /** Modifiable items that launch a projectile, as opposed to being the projectile. Additionally includes {@link ToolStats#PROJECTILE_DAMAGE} for its launch power. */
     public static final TagKey<Item> LAUNCHERS = local("modifiable/ranged/launcher");
+    // subclasses
     /** Any modifiable ranged items that are a bow, includes crosbows and longbows */
     public static final TagKey<Item> BOWS = local("modifiable/ranged/bows");
     /** Any modifiable bows that fire arrows on release */
     public static final TagKey<Item> LONGBOWS = local("modifiable/ranged/longbows");
-    /** Bows supporting the ballista modifier. In code, only {@link slimeknights.tconstruct.library.tools.item.ranged.ModifiableBowItem} implements this functionality. */
-    public static final TagKey<Item> BALLISTAS = local("modifiable/ranged/ballistas");
     /** Any modifiable bows that store an arrow then fire on next use */
     public static final TagKey<Item> CROSSBOWS = local("modifiable/ranged/crossbows");
     /** Modifiable items support special staff modifiers, is a subtag of ranged. */
     public static final TagKey<Item> STAFFS = local("modifiable/staffs");
     /** Modifiable items that support fishing modifiers. */
     public static final TagKey<Item> FISHING_RODS = local("modifiable/fishing_rods");
+    // specific modifiers
+    /** Ranged items supporting the power upgrade */
+    public static final TagKey<Item> RANGED_POWER = local("modifiable/ranged/power");
+    /** Ranged items supporting the quick charge upgrade */
+    public static final TagKey<Item> RANGED_QUICK_CHARGE = local("modifiable/ranged/quick_charge");
+    /** Ranged items supporting the bounce upgrade */
+    public static final TagKey<Item> RANGED_BOUNCE = local("modifiable/ranged/bounce");
+    /** Bows supporting the ballista modifier. In code, only {@link slimeknights.tconstruct.library.tools.item.ranged.ModifiableBowItem} implements this functionality. */
+    public static final TagKey<Item> BALLISTAS = local("modifiable/ranged/ballistas");
+    // book
     /** Ranged tools to show in materials and you and the encyclopedia. */
     public static final TagKey<Item> SMALL_RANGED = local("modifiable/ranged/small");
     /** Ranged tools to show in mighty smelting and the encyclopedia. */
@@ -512,8 +524,12 @@ public class TinkerTags {
     public static final TagKey<Item> EMBELLISHMENT_SLIME = local("modifiable/embellishment/slime");
     /** Tools that can be dyed */
     public static final TagKey<Item> DYEABLE = local("modifiable/dyeable");
+    /** Tools that can have a banner applied */
+    public static final TagKey<Item> BANNER = local("modifiable/banner");
     /** Armor items that support trim */
     public static final TagKey<Item> TRIM = local("modifiable/armor/trim");
+    /** Armor items that support trim materials but skip the pattern. Used for non-worn armor such as shields. */
+    public static final TagKey<Item> TRIM_NO_PATTERN = local("modifiable/armor/trim/no_pattern");
     /** Tools to blacklist from default part recycling recipes. May still be recyclable in other recipes */
     public static final TagKey<Item> UNRECYCLABLE = local("modifiable/unrecyclable");
     /** Tools to blacklist from default salvage recipes. May still be salvagable in other recipes */

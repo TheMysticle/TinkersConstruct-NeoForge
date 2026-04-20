@@ -35,7 +35,6 @@ import slimeknights.tconstruct.library.tools.helper.ToolDamageUtil;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -70,11 +69,7 @@ public enum HarvestModule implements ModifierModule, BlockInteractionModifierHoo
    * @param player   Player instance
    * @return  True if harvested
    */
-
-  private static boolean harvestInteract(UseOnContext context, ServerLevel world, BlockState state, BlockPos pos, @Nullable Player player) {
-    if (player == null) {
-      return false;
-    }
+  private static boolean harvestInteract(UseOnContext context, ServerLevel world, BlockState state, BlockPos pos, Player player) {
     BlockHitResult trace = new BlockHitResult(context.getClickLocation(), context.getClickedFace(), pos, false);
     InteractionResult result = state.useWithoutItem(world, player, trace);
     return result.consumesAction();
@@ -126,27 +121,21 @@ public enum HarvestModule implements ModifierModule, BlockInteractionModifierHoo
       // try to find an age property
       IntegerProperty age = null;
       for (Property<?> prop : state.getProperties()) {
-        if (prop.getName().equals("age") && prop instanceof IntegerProperty) {
-          age = (IntegerProperty)prop;
+        if (prop.getName().equals("age") && prop instanceof IntegerProperty intProp) {
+          age = intProp;
           break;
         }
       }
-      // must have an age property
+      // must have an age property, and be at max age
       if (age == null) {
         return false;
-      } else {
-        // property must have 0 as valid
-        Collection<Integer> allowedValues = age.getPossibleValues();
-        if (!allowedValues.contains(0)) {
-          return false;
-        }
-        // crop must be max age
-        int maxAge = age.getPossibleValues().stream().max(Integer::compareTo).orElse(Integer.MAX_VALUE);
-        if (state.getValue(age) < maxAge) {
-          return false;
-        }
-        replant = state.setValue(age, 0);
       }
+      int maxAge = age.getPossibleValues().stream().mapToInt(Integer::intValue).max().orElse(Integer.MAX_VALUE);
+      if (state.getValue(age) < maxAge) {
+        return false;
+      }
+      int minAge = age.getPossibleValues().stream().mapToInt(Integer::intValue).min().orElse(0);
+      replant = state.setValue(age, minAge);
     }
 
     // crop is fully grown, get block drops
@@ -209,7 +198,7 @@ public enum HarvestModule implements ModifierModule, BlockInteractionModifierHoo
       didHarvest = result == TinkerToolEvent.Result.ALLOW;
 
       // crops that work based on right click interact (berry bushes)
-    } else if (holder.is(TinkerTags.Blocks.HARVESTABLE_INTERACT)) {
+    } else if (player != null && holder.is(TinkerTags.Blocks.HARVESTABLE_INTERACT)) {
       didHarvest = harvestInteract(context, world, state, pos, player);
 
       // next, try sugar cane like blocks

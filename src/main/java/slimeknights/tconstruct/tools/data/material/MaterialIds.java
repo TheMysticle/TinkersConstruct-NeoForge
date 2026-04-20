@@ -56,6 +56,7 @@ public final class MaterialIds {
   public static final MaterialId gunpowder = id("gunpowder");
   public static final MaterialId redstone = id("redstone");
   // tier 2 - ammo slimeballs
+  public static final MaterialId turtle = id("turtle");
   public static final MaterialId slimeball = id("slimeball");
   // tier 3
   public static final MaterialId slimesteel = id("slimesteel");
@@ -67,6 +68,7 @@ public final class MaterialIds {
   // tier 3 (nether)
   public static final MaterialId cobalt = id("cobalt");
   public static final MaterialId steel = id("steel");
+  public static final MaterialId kobold = id("kobold");
   // tier 3 - bindings
   public static final MaterialId darkthread = id("darkthread");
   public static final MaterialId ichorskin = id("ichorskin");
@@ -91,6 +93,7 @@ public final class MaterialIds {
   public static final MaterialId endRod = id("end_rod");
   //public static final MaterialId soulsteel = id("soulsteel");
   // tier 4 - bindings
+  public static final MaterialId jeweledHide = id("jeweled_hide");
   public static final MaterialId ancientHide = id("ancient_hide");
   public static final MaterialId enderslimeVine = id("enderslime_vine");
   // tier 4 - ammo
@@ -132,7 +135,6 @@ public final class MaterialIds {
   public static final MaterialId rottenFlesh = id("rotten_flesh");
   // slimesuit
   public static final MaterialId phantom = id("phantom");
-  // slimesuit - textures
   public static final MaterialId blood = id("blood");
   public static final MaterialId clay = id("clay");
   public static final MaterialId honey = id("honey");

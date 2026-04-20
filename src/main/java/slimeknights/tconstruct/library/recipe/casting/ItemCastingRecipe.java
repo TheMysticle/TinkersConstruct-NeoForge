@@ -70,12 +70,25 @@ public class ItemCastingRecipe extends AbstractCastingRecipe implements IDisplay
         throw e;
       }
 
+      // During datagen, recipe providers can construct tag-backed outputs before the
+      // same run's generated tags are visible to lookup resolution.
+      if (isDatagenContext()) {
+        return;
+      }
+
       String source = "tag '" + output.getTag().location() + "'";
       throw new JsonParseException("Casting recipe '" + recipeId + "' has invalid result from " + source);
     }
 
-    if (!output.get().isEmpty()) {
-      return;
+    try {
+      if (!output.get().isEmpty()) {
+        return;
+      }
+    } catch (UnsupportedOperationException e) {
+      if (isDatagenContext()) {
+        return;
+      }
+      throw e;
     }
 
     String source = "an empty item stack";
@@ -93,6 +106,15 @@ public class ItemCastingRecipe extends AbstractCastingRecipe implements IDisplay
       current = current.getCause();
     }
     return false;
+  }
+
+  /** Detects recipe construction from datagen, where generated tag contents are not yet queryable. */
+  private static boolean isDatagenContext() {
+    return StackWalker.getInstance().walk(stream -> stream
+      .map(StackWalker.StackFrame::getClassName)
+      .anyMatch(className -> className.startsWith("net.minecraft.data.")
+        || className.startsWith("net.neoforged.neoforge.data.")
+        || className.equals("slimeknights.tconstruct.common.data.BaseRecipeProvider")));
   }
 
   @Override

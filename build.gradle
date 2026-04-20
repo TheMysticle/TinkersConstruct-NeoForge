@@ -96,6 +96,16 @@ sourceSets.main {
         srcDir modernDataPackDir
         // But exclude the cache of the generated data from what gets built
         exclude '.cache'
+        // Modern datapack paths are sourced from syncModernDataPackPaths; only exclude direct
+        // singular-path inputs from the original resource dirs, not from the synced output itself.
+        exclude { details ->
+            String path = details.path
+            boolean datapackRecipePath = path ==~ /data\/[^\/]+\/(recipe|recipes|loot_table|loot_tables)\/.*/
+            if (!datapackRecipePath) {
+                return false
+            }
+            return !details.file.toPath().startsWith(modernDataPackDir.get().asFile.toPath())
+        }
         // Exclude debug resources, they are for helping us make the mod, not for the actual mod
         exclude 'assets/tconstruct/debug'
     }
@@ -105,6 +115,16 @@ tasks.register('syncModernDataPackPaths', Sync) {
     into(modernDataPackDir)
 
     from('src/main/resources') {
+        include 'data/*/recipe/**'
+        eachFile { fileCopyDetails ->
+            if (fileCopyDetails.file.length() == 0L) {
+                fileCopyDetails.exclude()
+            }
+        }
+        includeEmptyDirs = false
+    }
+
+    from('src/main/resources') {
         include 'data/*/recipes/**'
         eachFile { fileCopyDetails ->
             fileCopyDetails.path = fileCopyDetails.path.replace('/recipes/', '/recipe/')
@@ -120,10 +140,35 @@ tasks.register('syncModernDataPackPaths', Sync) {
         includeEmptyDirs = false
     }
 
+    from('src/main/resources') {
+        include 'data/*/loot_table/**'
+        eachFile { fileCopyDetails ->
+            if (fileCopyDetails.file.length() == 0L) {
+                fileCopyDetails.exclude()
+            }
+        }
+        includeEmptyDirs = false
+    }
+
+    from('src/generated/resources') {
+        include 'data/*/recipe/**'
+        eachFile { fileCopyDetails ->
+            if (fileCopyDetails.file.length() == 0L) {
+                fileCopyDetails.exclude()
+            }
+        }
+        includeEmptyDirs = false
+    }
+
     from('src/generated/resources') {
         include 'data/*/recipes/**'
         eachFile { fileCopyDetails ->
-            fileCopyDetails.path = fileCopyDetails.path.replace('/recipes/', '/recipe/')
+            def modernPath = fileCopyDetails.path.replace('/recipes/', '/recipe/')
+            if (file("src/generated/resources/${modernPath}").exists()) {
+                fileCopyDetails.exclude()
+                return
+            }
+            fileCopyDetails.path = modernPath
         }
         includeEmptyDirs = false
     }
@@ -131,7 +176,22 @@ tasks.register('syncModernDataPackPaths', Sync) {
     from('src/generated/resources') {
         include 'data/*/loot_tables/**'
         eachFile { fileCopyDetails ->
-            fileCopyDetails.path = fileCopyDetails.path.replace('/loot_tables/', '/loot_table/')
+            def modernPath = fileCopyDetails.path.replace('/loot_tables/', '/loot_table/')
+            if (file("src/generated/resources/${modernPath}").exists()) {
+                fileCopyDetails.exclude()
+                return
+            }
+            fileCopyDetails.path = modernPath
+        }
+        includeEmptyDirs = false
+    }
+
+    from('src/generated/resources') {
+        include 'data/*/loot_table/**'
+        eachFile { fileCopyDetails ->
+            if (fileCopyDetails.file.length() == 0L) {
+                fileCopyDetails.exclude()
+            }
         }
         includeEmptyDirs = false
     }
@@ -139,7 +199,12 @@ tasks.register('syncModernDataPackPaths', Sync) {
     from('src/main/resources') {
         include 'data/forge/tags/block/needs_*_tool.json'
         eachFile { fileCopyDetails ->
-            fileCopyDetails.path = fileCopyDetails.path.replace('data/forge/tags/block/', 'data/neoforge/tags/block/')
+            def modernPath = fileCopyDetails.path.replace('data/forge/tags/block/', 'data/neoforge/tags/block/')
+            if (file("src/main/resources/${modernPath}").exists() || file("src/generated/resources/${modernPath}").exists()) {
+                fileCopyDetails.exclude()
+                return
+            }
+            fileCopyDetails.path = modernPath
         }
         includeEmptyDirs = false
     }
@@ -147,7 +212,12 @@ tasks.register('syncModernDataPackPaths', Sync) {
     from('src/generated/resources') {
         include 'data/forge/tags/block/needs_*_tool.json'
         eachFile { fileCopyDetails ->
-            fileCopyDetails.path = fileCopyDetails.path.replace('data/forge/tags/block/', 'data/neoforge/tags/block/')
+            def modernPath = fileCopyDetails.path.replace('data/forge/tags/block/', 'data/neoforge/tags/block/')
+            if (file("src/generated/resources/${modernPath}").exists() || file("src/main/resources/${modernPath}").exists()) {
+                fileCopyDetails.exclude()
+                return
+            }
+            fileCopyDetails.path = modernPath
         }
         includeEmptyDirs = false
     }
@@ -297,7 +367,6 @@ tasks.register('syncModernDataPackPaths', Sync) {
             }
             false
         }
-
         def synthesizeForgeTag
         synthesizeForgeTag = { String registry, String tagPath ->
             Set<String> values = new LinkedHashSet<>()
@@ -305,7 +374,6 @@ tasks.register('syncModernDataPackPaths', Sync) {
             collectTagChildren('forge', registry, tagPath).each { String child ->
                 values.add("#forge:${tagPath}/${child}")
             }
-
             if (values.isEmpty()) {
                 switch (tagPath) {
                     case 'stone':

@@ -2,20 +2,13 @@ package slimeknights.tconstruct.library.client.modifiers;
 
 import com.mojang.math.Transformation;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.BlockElement;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.material.Fluid;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.neoforged.neoforge.client.model.QuadTransformers;
-import net.neoforged.neoforge.client.model.SimpleModelState;
-import net.neoforged.neoforge.client.model.geometry.UnbakedGeometryHelper;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.joml.Vector3f;
-import slimeknights.mantle.client.model.util.ColoredBlockModel;
+import slimeknights.mantle.data.loadable.record.RecordLoadable;
 import slimeknights.mantle.util.ItemLayerPixels;
-import slimeknights.tconstruct.library.client.model.FluidContainerModel;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.capability.fluid.ToolTankHelper;
@@ -23,13 +16,14 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * Model for tank modifiers, also displays the fluid
+ * Model for tank modifiers, also displays the fluid.
+ * @deprecated use {@link slimeknights.tconstruct.library.client.modifiers.model.FluidModifierModel}
  */
+@Deprecated
 public class FluidModifierModel extends NormalModifierModel {
   /**
    * The vanilla model bakery uses an orgin of 0.5,0.5,0.5, and forges dynamic fluid code uses the vanilla model bakery. (see{@link net.minecraft.client.renderer.block.model.FaceBakery} {@code #rotateVertexBy()} for vanilla bakery)
@@ -54,6 +48,11 @@ public class FluidModifierModel extends NormalModifierModel {
   public FluidModifierModel(ToolTankHelper helper, @Nullable Material smallTexture, @Nullable Material largeTexture,
                             @Nullable Material smallFull, @Nullable Material largeFull) {
     this(helper, smallTexture, largeTexture, new Material[] { smallFull, largeFull });
+  }
+
+  @Override
+  public RecordLoadable<? extends NormalModifierModel> getLoader() {
+    throw new UnsupportedOperationException("For modifier model maps, use model.FluidModifierModel");
   }
 
   @Nullable
@@ -82,25 +81,7 @@ public class FluidModifierModel extends NormalModifierModel {
       // must have texture for the proper state
       Material template = getTemplate(tool, entry, fluid, isLarge);
       if (template != null) {
-        // fluid properties
-        IClientFluidTypeExtensions attributes = IClientFluidTypeExtensions.of(fluid.getFluid());
-        TextureAtlasSprite fluidSprite = spriteGetter.apply(new Material(InventoryMenu.BLOCK_ATLAS, attributes.getStillTexture(fluid)));
-
-        // build fluid like the forge dynamic container model
-        List<BlockElement> unbaked = UnbakedGeometryHelper.createUnbakedItemMaskElements(-1, spriteGetter.apply(template)); // Use template as mask
-        // TODO: is there anything that can be done about the fluid? to prevent weird offsets?
-        List<BakedQuad> fluidQuads = UnbakedGeometryHelper.bakeElements(unbaked, mat -> fluidSprite, new SimpleModelState(transforms.applyOrigin(ORIGIN).compose(FluidContainerModel.FLUID_TRANSFORM), false)); // Bake with fluid texture
-
-        // apply brightness and color
-        int luminosity = fluid.getFluid().getFluidType().getLightLevel(fluid);
-        if (luminosity > 0) {
-          QuadTransformers.settingEmissivity(luminosity).processInPlace(fluidQuads);
-        }
-        int color = attributes.getTintColor(fluid);
-        if (color != -1) {
-          ColoredBlockModel.applyColorQuadTransformer(color).processInPlace(fluidQuads);
-        }
-        quadConsumer.accept(fluidQuads);
+        slimeknights.tconstruct.library.client.modifiers.model.FluidModifierModel.addQuads(fluid, template, spriteGetter, transforms, quadConsumer);
       }
     }
     // add tank outline quads

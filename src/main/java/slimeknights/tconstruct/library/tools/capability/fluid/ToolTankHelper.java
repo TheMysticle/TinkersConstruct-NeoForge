@@ -8,6 +8,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.fluids.FluidStack;
 import slimeknights.mantle.Mantle;
+import slimeknights.mantle.data.registry.NamedComponentRegistry;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.library.modifiers.modules.ModifierModule;
 import slimeknights.tconstruct.library.modifiers.modules.build.ModifierTraitModule;
@@ -35,6 +36,9 @@ public class ToolTankHelper {
   public static final ToolTankHelper TANK_HELPER = new ToolTankHelper(CAPACITY_STAT, TConstruct.getResource("tank_fluid"));
   /** Module ensuring the tool has the tank */
   public static final ModifierModule TANK_HANDLER = new ModifierTraitModule(TinkerModifiers.tankHandler.getModifierId(), 1, true);
+
+  /** Loadable instance for JSON */
+  public static final NamedComponentRegistry<ToolTankHelper> LOADABLE = new NamedComponentRegistry<>("Unknown Tool Tank Helper");
 
   /** Tool stat handling max tank capacity */
   private final INumericToolStat<?> capacityStat;

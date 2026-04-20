@@ -36,6 +36,13 @@ import slimeknights.tconstruct.world.block.FoliageType;
 
 /** Add all relevant loot to loot tables */
 public class LootTableInjectionProvider extends AbstractLootTableInjectionProvider {
+  private static final ArmorItem.Type[] WEARABLE_ARMOR_TYPES = {
+    ArmorItem.Type.HELMET,
+    ArmorItem.Type.CHESTPLATE,
+    ArmorItem.Type.LEGGINGS,
+    ArmorItem.Type.BOOTS
+  };
+
   public LootTableInjectionProvider(PackOutput packOutput) {
     super(packOutput, TConstruct.MOD_ID);
   }
@@ -156,7 +163,7 @@ public class LootTableInjectionProvider extends AbstractLootTableInjectionProvid
                                  .build());
     // diamond armor shows in bastions, add in some plate with similar weight to enchanted version
     RandomMaterial randomHighTier = RandomMaterial.random().allowHidden().tier(3, 4).material(includeInLoot).build();
-    for (ArmorItem.Type slot : ArmorItem.Type.values()) {
+    for (ArmorItem.Type slot : WEARABLE_ARMOR_TYPES) {
       bastion.addToPool("main", LootItem.lootTableItem(TinkerTools.plateArmor.get(slot))
                                         .setWeight(6)
                                         .apply(AddToolDataFunction.builder()

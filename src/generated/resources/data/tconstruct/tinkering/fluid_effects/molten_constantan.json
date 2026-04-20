@@ -1,17 +1,5 @@
 {
-  "block_effects": [
-    {
-      "type": "tconstruct:mob_effect_cloud",
-      "effects": [
-        {
-          "effect": "minecraft:hunger",
-          "level": 1,
-          "time": 200
-        }
-      ]
-    }
-  ],
-  "conditions": [
+  "neoforge:conditions": [
     {
       "type": "neoforge:or",
       "values": [
@@ -26,6 +14,18 @@
         {
           "type": "mantle:tag_filled",
           "tag": "forge:ingots/nickel"
+        }
+      ]
+    }
+  ],
+  "block_effects": [
+    {
+      "type": "tconstruct:mob_effect_cloud",
+      "effects": [
+        {
+          "effect": "minecraft:hunger",
+          "level": 1,
+          "time": 200
         }
       ]
     }

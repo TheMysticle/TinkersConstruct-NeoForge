@@ -82,10 +82,23 @@ public class MeltingRecipe implements IMeltingRecipe {
       return;
     }
 
+    if (fluidOutput.getTag() != null && isDatagenContext()) {
+      return;
+    }
+
     String source = fluidOutput.getTag() != null
       ? "tag '" + fluidOutput.getTag().location() + "'"
       : "an empty fluid stack";
     throw new IllegalArgumentException("Melting recipe '" + recipeId + "' has invalid " + fieldName + " from " + source);
+  }
+
+  /** Detects recipe construction from datagen, where generated or compat tag contents may not yet be queryable. */
+  private static boolean isDatagenContext() {
+    return StackWalker.getInstance().walk(stream -> stream
+      .map(StackWalker.StackFrame::getClassName)
+      .anyMatch(className -> className.startsWith("net.minecraft.data.")
+        || className.startsWith("net.neoforged.neoforge.data.")
+        || className.equals("slimeknights.tconstruct.common.data.BaseRecipeProvider")));
   }
 
   @Override

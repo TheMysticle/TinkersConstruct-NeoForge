@@ -32,6 +32,7 @@ public class PotionCastingRecipeBuilder extends AbstractRecipeBuilder<PotionCast
   @Nullable
   private final ModifierId modifier;
   private final TypeAwareRecipeSerializer<? extends PotionCastingRecipe> recipeSerializer;
+  private final boolean clearing;
   private Ingredient bottle = Ingredient.EMPTY;
   private FluidIngredient fluid = FluidIngredient.EMPTY;
   @Setter @Accessors(chain = true)
@@ -41,7 +42,7 @@ public class PotionCastingRecipeBuilder extends AbstractRecipeBuilder<PotionCast
 
   /** Creates a new casting recipe for a bottle */
   public static PotionCastingRecipeBuilder castingRecipe(ItemLike result, TypeAwareRecipeSerializer<PotionCastingRecipe> serializer) {
-    return new PotionCastingRecipeBuilder(result.asItem(), null, serializer);
+    return new PotionCastingRecipeBuilder(result.asItem(), null, serializer, false);
   }
 
   /**
@@ -66,8 +67,8 @@ public class PotionCastingRecipeBuilder extends AbstractRecipeBuilder<PotionCast
   /* Modifier casting */
 
   /** Creates a new casting recipe for a bottle */
-  public static PotionCastingRecipeBuilder tippingRecipe(ModifierId modifier, TypeAwareRecipeSerializer<? extends PotionCastingRecipe> serializer) {
-    return new PotionCastingRecipeBuilder(Items.AIR, modifier, serializer);
+  public static PotionCastingRecipeBuilder tippingRecipe(ModifierId modifier, TypeAwareRecipeSerializer<? extends PotionCastingRecipe> serializer, boolean clearing) {
+    return new PotionCastingRecipeBuilder(Items.AIR, modifier, serializer, clearing);
   }
 
   /**
@@ -76,7 +77,7 @@ public class PotionCastingRecipeBuilder extends AbstractRecipeBuilder<PotionCast
    * @return  Builder instance
    */
   public static PotionCastingRecipeBuilder basinTipping(ModifierId modifier) {
-    return tippingRecipe(modifier, TinkerSmeltery.basinTippingRecipeSerializer.get());
+    return tippingRecipe(modifier, TinkerSmeltery.basinTippingRecipeSerializer.get(), false);
   }
 
   /**
@@ -85,7 +86,7 @@ public class PotionCastingRecipeBuilder extends AbstractRecipeBuilder<PotionCast
    * @return  Builder instance
    */
   public static PotionCastingRecipeBuilder tableTipping(ModifierId modifier) {
-    return tippingRecipe(modifier, TinkerSmeltery.tableTippingRecipeSerializer.get());
+    return tippingRecipe(modifier, TinkerSmeltery.tableTippingRecipeSerializer.get(), false);
   }
 
   /**
@@ -94,7 +95,7 @@ public class PotionCastingRecipeBuilder extends AbstractRecipeBuilder<PotionCast
    * @return  Builder instance
    */
   public static PotionCastingRecipeBuilder basinClearing(ModifierId modifier) {
-    return tippingRecipe(modifier, TinkerSmeltery.basinTipClearingRecipeSerializer.get());
+    return tippingRecipe(modifier, TinkerSmeltery.basinTipClearingRecipeSerializer.get(), true);
   }
 
   /**
@@ -103,7 +104,7 @@ public class PotionCastingRecipeBuilder extends AbstractRecipeBuilder<PotionCast
    * @return  Builder instance
    */
   public static PotionCastingRecipeBuilder tableClearing(ModifierId modifier) {
-    return tippingRecipe(modifier, TinkerSmeltery.tableTipClearingRecipeSerializer.get());
+    return tippingRecipe(modifier, TinkerSmeltery.tableTipClearingRecipeSerializer.get(), true);
   }
 
 
@@ -179,7 +180,11 @@ public class PotionCastingRecipeBuilder extends AbstractRecipeBuilder<PotionCast
     }
     @Nullable AdvancementHolder advancement = this.buildOptionalAdvancement(consumer, id, "casting");
     if (modifier != null) {
-      saveRecipe(consumer, id, new TippingCastingRecipe(recipeSerializer, id, group, bottle, fluid, coolingTime, modifier), advancement);
+      if (clearing) {
+        saveRecipe(consumer, id, new TipClearingCastingRecipe(recipeSerializer, id, group, bottle, fluid, coolingTime, modifier), advancement);
+      } else {
+        saveRecipe(consumer, id, new TippingCastingRecipe(recipeSerializer, id, group, bottle, fluid, coolingTime, modifier), advancement);
+      }
     } else {
       saveRecipe(consumer, id, new PotionCastingRecipe(recipeSerializer, id, group, bottle, fluid, result, coolingTime), advancement);
     }

@@ -1,7 +1,9 @@
 package slimeknights.tconstruct.smeltery.data;
 
 import net.minecraft.data.PackOutput;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -50,7 +52,11 @@ public class FluidContainerTransferProvider extends AbstractFluidContainerTransf
   @SuppressWarnings("removal")
   protected void addContainerlessEmpty(String name, String domain, FluidOutput fluid) {
     ResourceLocation id = ResourceLocation.fromNamespaceAndPath(domain, name);
-    addTransfer(domain + '_' + name, new EmptyFluidContainerTransfer(ItemNameIngredient.from(id).toIngredient(), ItemOutput.EMPTY, fluid), new ItemExistsCondition(id));
+    Item item = BuiltInRegistries.ITEM.get(id);
+    if (item == Items.AIR) {
+      return;
+    }
+    addTransfer(domain + '_' + name, new EmptyFluidContainerTransfer(Ingredient.of(item), ItemOutput.EMPTY, fluid), new ItemExistsCondition(id));
   }
 
   @Override

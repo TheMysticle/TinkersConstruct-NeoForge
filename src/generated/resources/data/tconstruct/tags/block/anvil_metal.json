@@ -9,7 +9,7 @@
     "#forge:storage_blocks/manyullyn",
     "#forge:storage_blocks/hepatizon",
     "#forge:storage_blocks/knightmetal",
-    "#forge:storage_blocks/netherite",
+    "#c:storage_blocks/netherite",
     {
       "id": "#forge:storage_blocks/bronze",
       "required": false

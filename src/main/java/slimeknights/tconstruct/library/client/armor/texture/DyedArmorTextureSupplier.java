@@ -6,6 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import slimeknights.mantle.data.loadable.Loadables;
 import slimeknights.mantle.data.loadable.common.ColorLoadable;
 import slimeknights.mantle.data.loadable.primitive.IntLoadable;
+import slimeknights.mantle.data.loadable.primitive.StringLoadable;
 import slimeknights.mantle.data.loadable.record.RecordLoadable;
 import slimeknights.tconstruct.library.modifiers.ModifierId;
 import slimeknights.tconstruct.library.tools.helper.ModifierUtil;
@@ -20,32 +21,40 @@ import static slimeknights.tconstruct.library.client.armor.texture.FixedArmorTex
  * Armor texture supplier that supplies a fixed texture that is colored using the given persistent data key
  */
 public class DyedArmorTextureSupplier implements ArmorTextureSupplier {
-  private static final ModifierId DEFAULT_DYED_MODIFIER = new ModifierId(TinkerModifiers.dyed.getId());
+  private static final ModifierId DEFAULT_DYED_MODIFIER = TinkerModifiers.dyed.getModifierId();
   public static final RecordLoadable<DyedArmorTextureSupplier> LOADER = RecordLoadable.create(
     Loadables.RESOURCE_LOCATION.requiredField("prefix", s -> s.prefix),
+    StringLoadable.DEFAULT.defaultField("suffix", "", s -> s.suffix),
     ModifierId.PARSER.defaultField("modifier", DEFAULT_DYED_MODIFIER, s -> s.modifier),
     ColorLoadable.NO_ALPHA.nullableField("default_color", s -> s.alwaysRender ? s.defaultColor : null),
     IntLoadable.range(0, 15).defaultField("luminosity", 0, false, s -> s.luminosity),
     DyedArmorTextureSupplier::new);
 
   private final ResourceLocation prefix;
+  private final String suffix;
   private final ModifierId modifier;
   private final boolean alwaysRender;
   private final int defaultColor;
   private final int luminosity;
   private final TintedArmorTexture[] textures;
 
-  public DyedArmorTextureSupplier(ResourceLocation prefix, ModifierId modifier, @Nullable Integer defaultColor, int luminosity) {
+  public DyedArmorTextureSupplier(ResourceLocation prefix, String suffix, ModifierId modifier, @Nullable Integer defaultColor, int luminosity) {
     this.prefix = prefix;
+    this.suffix = suffix;
     this.modifier = modifier;
     this.alwaysRender = defaultColor != null;
     this.defaultColor = Objects.requireNonNullElse(defaultColor, -1);
     this.luminosity = luminosity;
     this.textures = new TintedArmorTexture[] {
-      getTexture(prefix, "armor", -1, luminosity),
-      getTexture(prefix, "leggings", -1, luminosity),
-      getTexture(prefix, "wings", -1, luminosity),
+      getTexture(prefix, "armor" + suffix, -1, luminosity),
+      getTexture(prefix, "leggings" + suffix, -1, luminosity),
+      getTexture(prefix, "wings" + suffix, -1, luminosity),
     };
+  }
+
+  // TODO 1.21: cleanup constructor variants
+  public DyedArmorTextureSupplier(ResourceLocation prefix, ModifierId modifier, @Nullable Integer defaultColor, int luminosity) {
+    this(prefix, "", modifier, defaultColor, luminosity);
   }
 
   public DyedArmorTextureSupplier(ResourceLocation prefix, ModifierId modifier, @Nullable Integer defaultColor) {

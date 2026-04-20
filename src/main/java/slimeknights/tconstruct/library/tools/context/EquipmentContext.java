@@ -6,6 +6,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import slimeknights.mantle.util.LogicHelper;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.tools.capability.TinkerDataCapability;
 import slimeknights.tconstruct.library.tools.context.EquipmentIterator.EquipmentEntry;
@@ -102,6 +103,12 @@ public class EquipmentContext {
       tinkerDataFetched = true;
     }
     return tinkerData;
+  }
+
+  /** Gets the tinker data capability, or null if absent */
+  @Nullable
+  public TinkerDataCapability.Holder getDataHolder() {
+    return getTinkerData();
   }
 
 

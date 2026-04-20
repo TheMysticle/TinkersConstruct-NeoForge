@@ -84,7 +84,7 @@ public class MeltingRecipeBuilder extends AbstractRecipeBuilder<MeltingRecipeBui
    */
   public static MeltingRecipeBuilder melting(Ingredient input, FluidObject<?> fluid, int amount, float timeFactor) {
     int temperature = getTemperature(fluid);
-    return melting(input, fluid.result(amount), temperature, IMeltingRecipe.calcTime(temperature, timeFactor));
+    return melting(input, new FluidStack(fluid.get(), amount), temperature, IMeltingRecipe.calcTime(temperature, timeFactor));
   }
 
   /**

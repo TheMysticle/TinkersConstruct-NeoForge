@@ -78,7 +78,7 @@ public class ToolCapabilityProvider {
     event.registerItem(BlockItemProviderCapability.CAPABILITY, (stack, ctx) -> {
       ToolStack tool = ToolStack.from(stack);
       if (!tool.getModifiers().isEmpty()) {
-        return new ToolBlockItemProviderHook.CapabilityImpl(tool);
+        return new BlockItemProviderModifierHook.CapabilityImpl(tool);
       }
       return null;
     }, items);

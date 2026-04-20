@@ -1,17 +1,5 @@
 {
-  "block_effects": [
-    {
-      "type": "tconstruct:mob_effect_cloud",
-      "effects": [
-        {
-          "effect": "minecraft:night_vision",
-          "level": 1,
-          "time": 160
-        }
-      ]
-    }
-  ],
-  "conditions": [
+  "neoforge:conditions": [
     {
       "type": "neoforge:or",
       "values": [
@@ -22,6 +10,18 @@
         {
           "type": "mantle:tag_filled",
           "tag": "forge:ingots/tin"
+        }
+      ]
+    }
+  ],
+  "block_effects": [
+    {
+      "type": "tconstruct:mob_effect_cloud",
+      "effects": [
+        {
+          "effect": "minecraft:night_vision",
+          "level": 1,
+          "time": 160
         }
       ]
     }

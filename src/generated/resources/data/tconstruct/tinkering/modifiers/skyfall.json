@@ -1,10 +1,11 @@
 {
-  "level_display": "tconstruct:no_levels",
+  "level_display": "tconstruct:single_level",
   "modules": [
     {
       "type": "tconstruct:attribute",
       "attribute": "minecraft:generic.gravity",
-      "flat": -0.2,
+      "each_level": -0.1,
+      "flat": -0.05,
       "operation": "add_multiplied_total",
       "slots": [
         "mainhand",
@@ -12,14 +13,15 @@
         "feet",
         "legs",
         "chest",
-        "head"
+        "head",
+        "body"
       ],
       "tooltip_style": "percent"
     },
     {
       "type": "tconstruct:attribute",
       "attribute": "tconstruct:generic.safe_fall_distance",
-      "flat": 1.0,
+      "each_level": 1.0,
       "operation": "add_value",
       "slots": [
         "mainhand",
@@ -27,7 +29,8 @@
         "feet",
         "legs",
         "chest",
-        "head"
+        "head",
+        "body"
       ]
     }
   ],

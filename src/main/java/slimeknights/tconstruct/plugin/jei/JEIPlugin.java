@@ -140,6 +140,8 @@ import static slimeknights.mantle.Mantle.commonResource;
 
 @JeiPlugin
 public class JEIPlugin implements IModPlugin {
+  private static final String JEI_TAG_INFO_RECIPE_CLASS = "mezz.jei.library.plugins.jei.tags.ITagInfoRecipe";
+  private static final List<String> JEI_TAG_INFO_RECIPE_PATHS = List.of("tag_recipes/block", "tag_recipes/item", "tag_recipes/fluid");
   /** Recipes that are meant as jokes and tend to confuse players, so are hidden */
   private static final ResourceLocation[] EASTER_EGG_RECIPES = {
     TConstruct.getResource("tables/tinkers_forge"),
@@ -532,7 +534,7 @@ public class JEIPlugin implements IModPlugin {
     // tools
     for (Holder<Item> holder : BuiltInRegistries.ITEM.getTagOrEmpty(TinkerTags.Items.MULTIPART_TOOL)) {
       Item item = holder.value();
-      registry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, item, holder.is(TinkerTags.Items.SINGLEPART_TOOL) ? ToolSubtypeInterpreter.ALWAYS : ToolSubtypeInterpreter.INGREDIENT);
+      registry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, item, holder.is(TinkerTags.Items.SINGLEPART_TOOL) ? ToolSubtypeInterpreter.FIRST : ToolSubtypeInterpreter.INGREDIENT);
     }
 
     // fluid containers have types based on fluid, don't bother with different sizes
@@ -546,6 +548,7 @@ public class JEIPlugin implements IModPlugin {
     registry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, TinkerSmeltery.scorchedLantern.asItem(), tankInterpreter);
     registry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, TinkerSmeltery.searedFluidCannon.asItem(), tankInterpreter);
     registry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, TinkerSmeltery.scorchedFluidCannon.asItem(), tankInterpreter);
+    registry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, TinkerSmeltery.endFluidCannon.asItem(), tankInterpreter);
 
     registry.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, TinkerModifiers.creativeSlotItem.get(), (stack, context) -> {
       SlotType slotType = CreativeSlotItem.getSlot(stack);
@@ -583,6 +586,21 @@ public class JEIPlugin implements IModPlugin {
     remove.add(new FluidStack(fluid, FluidType.BUCKET_VOLUME));
   }
 
+  /** Hides JEI's internal tag info tabs, which otherwise add noisy Block Tags/Item Tags pages for many stacks. */
+  @SuppressWarnings({"rawtypes", "unchecked"})
+  private static void hideTagInfoCategories(IJeiRuntime jeiRuntime) {
+    try {
+      Class<?> tagInfoRecipeClass = Class.forName(JEI_TAG_INFO_RECIPE_CLASS);
+      for (String path : JEI_TAG_INFO_RECIPE_PATHS) {
+        mezz.jei.api.recipe.RecipeType<?> type = mezz.jei.api.recipe.RecipeType.create("minecraft", path, (Class)tagInfoRecipeClass);
+        jeiRuntime.getRecipeManager().hideRecipeCategory(type);
+      }
+      TConstruct.LOG.info("JEI runtime available: hiding built-in tag info categories for cleaner recipe navigation");
+    } catch (ReflectiveOperationException | LinkageError e) {
+      TConstruct.LOG.warn("Failed to hide JEI tag info categories", e);
+    }
+  }
+
   /** Checks if the given tag exists */
   @SuppressWarnings("deprecation")
   private static boolean tagExists(String name) {
@@ -601,6 +619,7 @@ public class JEIPlugin implements IModPlugin {
   @Override
   public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
     addLateRecipes(jeiRuntime);
+    hideTagInfoCategories(jeiRuntime);
 
     IIngredientManager manager = jeiRuntime.getIngredientManager();
 

@@ -21,6 +21,7 @@ import net.neoforged.neoforge.common.crafting.IntersectionIngredient;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.conditions.ItemExistsCondition;
 import net.neoforged.neoforge.common.conditions.NotCondition;
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import slimeknights.mantle.recipe.condition.TagCombinationCondition;
 import slimeknights.mantle.recipe.condition.TagFilledCondition;
@@ -171,7 +172,7 @@ public class SmelteryRecipeBuilder {
   @CheckReturnValue
   private FluidOutput result(int amount) {
     if (fluidObject != null) {
-      return fluidObject.result(amount);
+      return FluidOutput.fromStack(new FluidStack(fluidObject.get(), amount));
     }
     if (fluid != null) {
       return FluidOutput.fromFluid(fluid, amount);
@@ -212,13 +213,19 @@ public class SmelteryRecipeBuilder {
   /** Creates a condition for a tag being empty */
   @CheckReturnValue
   public static ICondition tagCondition(String name) {
-    return tagCondition(commonResource(name));
+    return tagCondition(commonItemTag(name));
   }
 
   /** Creates a tag key for an item */
   @CheckReturnValue
   public static TagKey<Item> itemTag(String name) {
-    return ItemTags.create(commonResource(name));
+    return ItemTags.create(commonItemTag(name));
+  }
+
+  /** Creates a common item tag location using the modern shared namespace */
+  @CheckReturnValue
+  private static ResourceLocation commonItemTag(String name) {
+    return ResourceLocation.fromNamespaceAndPath("c", name);
   }
 
   /** Creates a location under the given domain with the passed prefix  */
@@ -255,6 +262,9 @@ public class SmelteryRecipeBuilder {
   /** Adds a recipe for melting an item by ID. Automatically optional */
   private void itemMelting(float scale, String output, float factor, ResourceLocation itemName, boolean damagable) {
     Item item = BuiltInRegistries.ITEM.get(itemName);
+    if (item == Items.AIR) {
+      return;
+    }
     MeltingRecipeBuilder builder = MeltingRecipeBuilder.melting(Ingredient.of(item), result((int) (baseUnit * scale)), temperature, factor);
     if (damagable) {
       builder.setDamagable(damageUnits());
@@ -267,7 +277,7 @@ public class SmelteryRecipeBuilder {
 
   /** Adds a recipe for melting an item from a tag */
   private void tagMelting(float scale, String output, float factor, String tagName, boolean forceOptional) {
-    tagMelting(scale, output, factor, commonResource(tagName), false, forceOptional);
+    tagMelting(scale, output, factor, commonItemTag(tagName), false, forceOptional);
   }
 
   /** Adds a recipe for melting an item from a tag */
@@ -467,7 +477,7 @@ public class SmelteryRecipeBuilder {
 
   /** Adds a recipe melting a tag item */
   public SmelteryRecipeBuilder melting(float scale, String output, String tagPrefix, float factor, boolean damagable, boolean forceOptional) {
-    return melting(scale, output, commonResource(tagPrefix + '/' + name.getPath()), factor, damagable, forceOptional);
+    return melting(scale, output, commonItemTag(tagPrefix + '/' + name.getPath()), factor, damagable, forceOptional);
   }
 
   /** Adds a recipe melting a tag item */

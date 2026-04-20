@@ -1,6 +1,7 @@
 package slimeknights.tconstruct.tools.logic;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multiset;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -12,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -150,8 +152,13 @@ public class ModifierEvents {
   static void isPotionApplicable(MobEffectEvent.Applicable event) {
     TinkerDataCapability.Holder data = TinkerDataCapability.getData(event.getEntity());
     if (data != null) {
-      if (data.computeIfAbsent(EffectImmunityModule.EFFECT_IMMUNITY).contains(event.getEffectInstance().getEffect())) {
-        event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+      Multiset<MobEffect> multiset = data.get(EffectImmunityModule.EFFECT_IMMUNITY);
+      if (multiset != null) {
+        // only grant immunity if the amount is high enough
+        MobEffectInstance effectInstance = event.getEffectInstance();
+        if (multiset.count(effectInstance.getEffect()) > effectInstance.getAmplifier()) {
+          event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
+        }
       }
     }
   }

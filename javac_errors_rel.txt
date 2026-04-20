@@ -1,0 +1,200 @@
+src\main\java\slimeknights\tconstruct\library\client\modifiers\model\TrimModifierModel.java:128: constructor ResourceLocation in class ResourceLocation cannot be applied to given types;
+src\main\java\slimeknights\tconstruct\common\data\model\TinkerSpriteSourceProvider.java:87: incompatible types: List<Object> cannot be converted to List<ResourceLocation>
+src\main\java\slimeknights\tconstruct\common\data\model\TinkerSpriteSourceProvider.java:87: constructor ResourceLocation in class ResourceLocation cannot be applied to given types;
+src\main\java\slimeknights\tconstruct\common\data\model\TinkerSpriteSourceProvider.java:87: constructor ResourceLocation in class ResourceLocation cannot be applied to given types;
+src\main\java\slimeknights\tconstruct\common\data\tags\ItemTagProvider.java:359: cannot find symbol
+src\main\java\slimeknights\tconstruct\common\data\tags\ItemTagProvider.java:360: cannot find symbol
+src\main\java\slimeknights\tconstruct\common\data\tags\ItemTagProvider.java:371: cannot find symbol
+src\main\java\slimeknights\tconstruct\common\data\tags\ItemTagProvider.java:372: cannot find symbol
+src\main\java\slimeknights\tconstruct\gadgets\item\PiggyBackPackItem.java:152: incompatible types: CarryPotionEffect cannot be converted to Holder<MobEffect>
+src\main\java\slimeknights\tconstruct\gadgets\item\PiggyBackPackItem.java:203: getSprite(ResourceLocation) has protected access in TextureAtlasHolder
+src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:25: no suitable method found for create(LoadableField<ResourceLocation,Object>,LoadableField<ModifierId,Object>,LoadableField<String,Object>,LoadableField<ModifierId,Object>,LoadableField<Integer,Object>,LoadableField<Integer,Object>,DyedArmorT[...]::new)
+src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:26: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:27: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:28: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:29: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:30: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:30: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:31: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\armor\texture\MaterialHasFallbackTextureSupplier.java:62: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\item\ModifiableItemClientExtension.java:82: variable remainingTime is already defined in method applyForgeHandTransform(PoseStack,LocalPlayer,HumanoidArm,ItemStack,float,float,float)
+src\main\java\slimeknights\tconstruct\library\client\item\ModifiableCrossbowClientExtension.java:23: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\model\tools\ToolModel.java:97: ToolModel is not abstract and does not override abstract method bake(IGeometryBakingContext,ModelBaker,Function<Material,TextureAtlasSprite>,ModelState,ItemOverrides) in IUnbakedGeometry
+src\main\java\slimeknights\tconstruct\library\client\model\tools\ToolModel.java:508: method does not override or implement a method from a supertype
+src\main\java\slimeknights\tconstruct\library\client\modifiers\model\BannerModifierModel.java:49: SHIELD_MATERIALS has private access in Sheets
+src\main\java\slimeknights\tconstruct\library\client\modifiers\model\BannerModifierModel.java:49: incompatible types: ResourceLocation cannot be converted to ResourceKey<BannerPattern>
+src\main\java\slimeknights\tconstruct\library\client\modifiers\model\BannerModifierModel.java:80: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\modifiers\model\FluidModifierModel.java:62: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\modifiers\model\FluidModifierModel.java:93: incompatible types: SpriteContents cannot be converted to TextureAtlasSprite
+src\main\java\slimeknights\tconstruct\library\client\modifiers\model\FluidModifierModel.java:95: incompatible types: List<BlockElement> cannot be converted to IModelBuilder<?>
+src\main\java\slimeknights\tconstruct\library\client\modifiers\model\TankModifierModel.java:69: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\modifiers\ModifierModelMapManager.java:58: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\client\modifiers\ModifierModelMapManager.java:131: constructor ResourceLocation in class ResourceLocation cannot be applied to given types;
+src\main\java\slimeknights\tconstruct\library\data\AbstractModifierModelMapProvider.java:65: ResourceLocation(String,String) has private access in ResourceLocation
+src\main\java\slimeknights\tconstruct\library\data\AbstractModifierModelMapProvider.java:100: ResourceLocation(String,String) has private access in ResourceLocation
+src\main\java\slimeknights\tconstruct\library\data\AbstractModifierModelMapProvider.java:292: incompatible types: ResourceLocation cannot be converted to ModifierId
+src\main\java\slimeknights\tconstruct\library\data\AbstractModifierModelMapProvider.java:297: incompatible types: ResourceLocation cannot be converted to ModifierId
+src\main\java\slimeknights\tconstruct\library\data\AbstractModifierModelMapProvider.java:307: incompatible types: ResourceLocation cannot be converted to ModifierId
+src\main\java\slimeknights\tconstruct\library\data\AbstractModifierModelMapProvider.java:320: incompatible types: ResourceLocation cannot be converted to ModifierId
+src\main\java\slimeknights\tconstruct\library\tools\context\EquipmentContext.java:111: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\modifiers\modules\build\EnchantmentModule.java:90: incompatible types: LevelingInt cannot be converted to int
+src\main\java\slimeknights\tconstruct\library\modifiers\modules\combat\MobEffectModule.java:237: cannot find symbol
+src\main\java\slimeknights\tconstruct\library\tools\capability\ToolCapabilityProvider.java:81: package ToolBlockItemProviderHook does not exist
+src\main\java\slimeknights\tconstruct\library\utils\Util.java:179: cannot find symbol
+src\main\java\slimeknights\tconstruct\shared\TinkerEffects.java:63: cannot find symbol
+src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:36: cannot find symbol
+src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:60: incompatible types: Codec<ShieldBannerModifierSpriteSource> cannot be converted to MapCodec<? extends SpriteSource>
+src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:68: SHIELD_MATERIALS has private access in Sheets
+src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:68: incompatible types: Entry<ResourceLocation,Material> cannot be converted to Entry<ResourceKey<BannerPattern>,Material>
+src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:88: ShieldBannerModifierSpriteSource.BannerModifierSpriteSupplier is not abstract and does not override abstract method apply(SpriteResourceLoader) in Function
+src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:93: method does not override or implement a method from a supertype
+src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:105: constructor SpriteContents in class SpriteContents cannot be applied to given types;
+src\main\java\slimeknights\tconstruct\tools\data\ArmorModelProvider.java:24: incompatible types: ResourceLocation cannot be converted to ModifierId
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:27: no suitable method found for basic(char,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ResourceLocation,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:51: no suitable method found for basic(char,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ResourceLocation,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:63: no suitable method found for basic(char,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ResourceLocation,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:75: no suitable method found for basic(char,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ResourceLocation,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:100: no suitable method found for basic(char,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ResourceLocation,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:121: no suitable method found for basic(char,ModifierId,ResourceLocation,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:147: no suitable method found for basic(char,ModifierId,ResourceLocation,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:161: no suitable method found for basic(char,ModifierId,ResourceLocation,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:175: no suitable method found for basic(char,ModifierId,ResourceLocation,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:190: no suitable method found for basic(char,ModifierId,ResourceLocation,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:211: no suitable method found for basic(char,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ResourceLocation,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:232: incompatible types: ResourceLocation cannot be converted to ModifierId
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:264: incompatible types: ResourceLocation cannot be converted to ModifierId
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:301: incompatible types: ResourceLocation cannot be converted to ModifierId
+src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:315: incompatible types: ResourceLocation cannot be converted to ModifierId
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialRecipeProvider.java:140: cannot find symbol
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:150: no suitable method found for addDefaultTraits(MaterialId,ModifierId,ResourceLocation)
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:151: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation)
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:153: no suitable method found for addDefaultTraits(MaterialId,ResourceLocation,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:184: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation)
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:185: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:186: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:187: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation)
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:188: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:189: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation,ModifierId)
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:212: no suitable method found for addTraits(MaterialStatsId,ResourceLocation,ModifierId,ResourceLocation)
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:213: no suitable method found for addTraits(MaterialStatsId,ResourceLocation,ModifierId,ResourceLocation)
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:222: incompatible types: ResourceLocation cannot be converted to MaterialStatsId
+src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:233: incompatible types: ResourceLocation cannot be converted to MaterialStatsId
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:497: no suitable method found for buildModifier(ResourceLocation)
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:501: cannot find symbol
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:504: cannot find symbol
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:515: incompatible types: LevelingInt cannot be converted to int
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:518: cannot find symbol
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:520: incompatible types: LevelingInt cannot be converted to int
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:741: cannot find symbol
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:741: package ForgeMod does not exist
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:750: cannot find symbol
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:751: cannot find symbol
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:765: incompatible types: ModifierId cannot be converted to ResourceLocation
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1116: cannot find symbol
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1257: cannot find symbol
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1258: cannot find symbol
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1587: no suitable constructor found for EffectImmunityModule(Holder<MobEffect>,LevelingInt)
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1588: no suitable method found for builder(Holder<MobEffect>)
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1596: no suitable constructor found for EffectImmunityModule(Holder<MobEffect>,LevelingInt)
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1597: no suitable method found for builder(Holder<MobEffect>)
+src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1636: no suitable method found for buildModifier(ResourceLocation)
+  src\main\java\slimeknights\tconstruct\library\client\modifiers\model\TrimModifierModel.java:128: constructor ResourceLocation in class ResourceLocation cannot be applied to given types;
+  src\main\java\slimeknights\tconstruct\common\data\model\TinkerSpriteSourceProvider.java:87: constructor ResourceLocation in class ResourceLocation cannot be applied to given types;
+  src\main\java\slimeknights\tconstruct\common\data\model\TinkerSpriteSourceProvider.java:87: constructor ResourceLocation in class ResourceLocation cannot be applied to given types;
+  src\main\java\slimeknights\tconstruct\library\client\modifiers\ModifierModelMapManager.java:131: constructor ResourceLocation in class ResourceLocation cannot be applied to given types;
+  src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:105: constructor SpriteContents in class SpriteContents cannot be applied to given types;
+  src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:25: no suitable method found for create(LoadableField<ResourceLocation,Object>,LoadableField<ModifierId,Object>,LoadableField<String,Object>,LoadableField<ModifierId,Object>,LoadableField<Integer,Object>,LoadableField<Integer,Object>,DyedArmorT[...]::new)
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:27: no suitable method found for basic(char,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ResourceLocation,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:51: no suitable method found for basic(char,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ResourceLocation,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:63: no suitable method found for basic(char,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ResourceLocation,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:75: no suitable method found for basic(char,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ResourceLocation,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:100: no suitable method found for basic(char,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ResourceLocation,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:121: no suitable method found for basic(char,ModifierId,ResourceLocation,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:147: no suitable method found for basic(char,ModifierId,ResourceLocation,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:161: no suitable method found for basic(char,ModifierId,ResourceLocation,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:175: no suitable method found for basic(char,ModifierId,ResourceLocation,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:190: no suitable method found for basic(char,ModifierId,ResourceLocation,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:211: no suitable method found for basic(char,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ResourceLocation,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:150: no suitable method found for addDefaultTraits(MaterialId,ModifierId,ResourceLocation)
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:151: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation)
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:153: no suitable method found for addDefaultTraits(MaterialId,ResourceLocation,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:184: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation)
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:185: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:186: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:187: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation)
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:188: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:189: no suitable method found for addTraits(MaterialId,MaterialStatsId,ModifierId,ResourceLocation,ModifierId)
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:212: no suitable method found for addTraits(MaterialStatsId,ResourceLocation,ModifierId,ResourceLocation)
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:213: no suitable method found for addTraits(MaterialStatsId,ResourceLocation,ModifierId,ResourceLocation)
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:497: no suitable method found for buildModifier(ResourceLocation)
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1587: no suitable constructor found for EffectImmunityModule(Holder<MobEffect>,LevelingInt)
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1588: no suitable method found for builder(Holder<MobEffect>)
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1596: no suitable constructor found for EffectImmunityModule(Holder<MobEffect>,LevelingInt)
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1597: no suitable method found for builder(Holder<MobEffect>)
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1636: no suitable method found for buildModifier(ResourceLocation)
+  src\main\java\slimeknights\tconstruct\common\data\tags\ItemTagProvider.java:359: cannot find symbol
+  src\main\java\slimeknights\tconstruct\common\data\tags\ItemTagProvider.java:360: cannot find symbol
+  src\main\java\slimeknights\tconstruct\common\data\tags\ItemTagProvider.java:371: cannot find symbol
+  src\main\java\slimeknights\tconstruct\common\data\tags\ItemTagProvider.java:372: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:26: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:27: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:28: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:29: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:30: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:30: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\armor\texture\DyedArmorTextureSupplier.java:31: cannot find symbol
+  src\main\java\slimeknights\tconstruct\shared\TinkerEffects.java:63: cannot find symbol
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialRecipeProvider.java:140: cannot find symbol
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:501: cannot find symbol
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:504: cannot find symbol
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:518: cannot find symbol
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:741: cannot find symbol
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:750: cannot find symbol
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:751: cannot find symbol
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1116: cannot find symbol
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1257: cannot find symbol
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:1258: cannot find symbol
+  src\main\java\slimeknights\tconstruct\gadgets\item\PiggyBackPackItem.java:203: getSprite(ResourceLocation) has protected access in TextureAtlasHolder
+  src\main\java\slimeknights\tconstruct\library\client\modifiers\model\BannerModifierModel.java:49: SHIELD_MATERIALS has private access in Sheets
+  src\main\java\slimeknights\tconstruct\library\data\AbstractModifierModelMapProvider.java:65: ResourceLocation(String,String) has private access in ResourceLocation
+  src\main\java\slimeknights\tconstruct\library\data\AbstractModifierModelMapProvider.java:100: ResourceLocation(String,String) has private access in ResourceLocation
+  src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:68: SHIELD_MATERIALS has private access in Sheets
+  src\main\java\slimeknights\tconstruct\library\client\model\tools\ToolModel.java:508: method does not override or implement a method from a supertype
+  src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:93: method does not override or implement a method from a supertype
+  src\main\java\slimeknights\tconstruct\library\client\armor\texture\MaterialHasFallbackTextureSupplier.java:62: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\item\ModifiableCrossbowClientExtension.java:23: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\modifiers\model\BannerModifierModel.java:80: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\modifiers\model\FluidModifierModel.java:62: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\modifiers\model\TankModifierModel.java:69: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\modifiers\ModifierModelMapManager.java:58: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\tools\context\EquipmentContext.java:111: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\modifiers\modules\combat\MobEffectModule.java:237: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\utils\Util.java:179: cannot find symbol
+  src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:36: cannot find symbol
+  src\main\java\slimeknights\tconstruct\library\client\model\tools\ToolModel.java:97: ToolModel is not abstract and does not override abstract method bake(IGeometryBakingContext,ModelBaker,Function<Material,TextureAtlasSprite>,ModelState,ItemOverrides) in IUnbakedGeometry
+  src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:88: ShieldBannerModifierSpriteSource.BannerModifierSpriteSupplier is not abstract and does not override abstract method apply(SpriteResourceLoader) in Function
+  src\main\java\slimeknights\tconstruct\common\data\model\TinkerSpriteSourceProvider.java:87: incompatible types: List<Object> cannot be converted to List<ResourceLocation>
+  src\main\java\slimeknights\tconstruct\gadgets\item\PiggyBackPackItem.java:152: incompatible types: CarryPotionEffect cannot be converted to Holder<MobEffect>
+  src\main\java\slimeknights\tconstruct\library\client\modifiers\model\BannerModifierModel.java:49: incompatible types: ResourceLocation cannot be converted to ResourceKey<BannerPattern>
+  src\main\java\slimeknights\tconstruct\library\client\modifiers\model\FluidModifierModel.java:93: incompatible types: SpriteContents cannot be converted to TextureAtlasSprite
+  src\main\java\slimeknights\tconstruct\library\client\modifiers\model\FluidModifierModel.java:95: incompatible types: List<BlockElement> cannot be converted to IModelBuilder<?>
+  src\main\java\slimeknights\tconstruct\library\data\AbstractModifierModelMapProvider.java:292: incompatible types: ResourceLocation cannot be converted to ModifierId
+  src\main\java\slimeknights\tconstruct\library\data\AbstractModifierModelMapProvider.java:297: incompatible types: ResourceLocation cannot be converted to ModifierId
+  src\main\java\slimeknights\tconstruct\library\data\AbstractModifierModelMapProvider.java:307: incompatible types: ResourceLocation cannot be converted to ModifierId
+  src\main\java\slimeknights\tconstruct\library\data\AbstractModifierModelMapProvider.java:320: incompatible types: ResourceLocation cannot be converted to ModifierId
+  src\main\java\slimeknights\tconstruct\library\modifiers\modules\build\EnchantmentModule.java:90: incompatible types: LevelingInt cannot be converted to int
+  src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:60: incompatible types: Codec<ShieldBannerModifierSpriteSource> cannot be converted to MapCodec<? extends SpriteSource>
+  src\main\java\slimeknights\tconstruct\tools\client\ShieldBannerModifierSpriteSource.java:68: incompatible types: Entry<ResourceLocation,Material> cannot be converted to Entry<ResourceKey<BannerPattern>,Material>
+  src\main\java\slimeknights\tconstruct\tools\data\ArmorModelProvider.java:24: incompatible types: ResourceLocation cannot be converted to ModifierId
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:232: incompatible types: ResourceLocation cannot be converted to ModifierId
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:264: incompatible types: ResourceLocation cannot be converted to ModifierId
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:301: incompatible types: ResourceLocation cannot be converted to ModifierId
+  src\main\java\slimeknights\tconstruct\tools\data\client\ModifierModelMapProvider.java:315: incompatible types: ResourceLocation cannot be converted to ModifierId
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:222: incompatible types: ResourceLocation cannot be converted to MaterialStatsId
+  src\main\java\slimeknights\tconstruct\tools\data\material\MaterialTraitsDataProvider.java:233: incompatible types: ResourceLocation cannot be converted to MaterialStatsId
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:515: incompatible types: LevelingInt cannot be converted to int
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:520: incompatible types: LevelingInt cannot be converted to int
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:765: incompatible types: ModifierId cannot be converted to ResourceLocation
+  src\main\java\slimeknights\tconstruct\library\tools\capability\ToolCapabilityProvider.java:81: package ToolBlockItemProviderHook does not exist
+  src\main\java\slimeknights\tconstruct\tools\data\ModifierProvider.java:741: package ForgeMod does not exist
+  src\main\java\slimeknights\tconstruct\library\client\item\ModifiableItemClientExtension.java:82: variable remainingTime is already defined in method applyForgeHandTransform(PoseStack,LocalPlayer,HumanoidArm,ItemStack,float,float,float)

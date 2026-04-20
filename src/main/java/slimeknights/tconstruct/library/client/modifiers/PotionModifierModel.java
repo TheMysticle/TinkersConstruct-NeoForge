@@ -1,7 +1,9 @@
 package slimeknights.tconstruct.library.client.modifiers;
 
 import com.mojang.math.Transformation;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
@@ -11,7 +13,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import slimeknights.mantle.client.model.util.MantleItemLayerModel;
+import slimeknights.mantle.data.loadable.record.RecordLoadable;
 import slimeknights.mantle.util.ItemLayerPixels;
+import slimeknights.tconstruct.library.client.modifiers.model.SimpleModifierModel;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.nbt.IModDataView;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
@@ -21,10 +25,17 @@ import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-/** Modifier model that renders the textured tinted based on the active potion color */
+/**
+ * Modifier model that renders the textured tinted based on the active potion color.
+ * TODO 1.21: move to {@link slimeknights.tconstruct.library.modifiers.modules}
+ */
+@Getter
+@Accessors(fluent = true)
 @RequiredArgsConstructor
-public class PotionModifierModel implements IBakedModifierModel {
-  /** Constant unbaked model instance, as they are all the same */
+public class PotionModifierModel implements SimpleModifierModel {
+  public static final RecordLoadable<PotionModifierModel> LOADER = SimpleModifierModel.loader(PotionModifierModel::new);
+  /** @deprecated legacy system, use {@link #LOADER} */
+  @Deprecated
   public static final IUnbakedModifierModel UNBAKED_INSTANCE = (smallGetter, largeGetter) -> {
     Material smallTexture = smallGetter.apply("");
     Material largeTexture = largeGetter.apply("");
@@ -39,6 +50,11 @@ public class PotionModifierModel implements IBakedModifierModel {
   private final Material small;
   @Nullable
   private final Material large;
+
+  @Override
+  public RecordLoadable<? extends PotionModifierModel> getLoader() {
+    return LOADER;
+  }
 
   @Nullable
   @Override

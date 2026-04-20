@@ -23,8 +23,11 @@ public class MaterialTagProvider extends AbstractMaterialTagProvider {
 
   @Override
   protected void addTags() {
-    // fiery is obtained through specific progression in TF, better to not add a progression bypass
-    tag(TinkerTags.Materials.EXCLUDE_FROM_LOOT).addOptional(MaterialIds.fiery.location());
+    tag(TinkerTags.Materials.EXCLUDE_FROM_LOOT)
+      // ancient hide is deprecated, don't add it to new tools
+      .add(loc(MaterialIds.ancientHide))
+      // fiery is obtained through specific progression in TF, better to not add a progression bypass
+      .addOptional(MaterialIds.fiery.location());
     tag(TinkerTags.Materials.NETHER).add(loc(
       // tier 1
       MaterialIds.wood, MaterialIds.flint, MaterialIds.rock, MaterialIds.bone,
@@ -48,7 +51,7 @@ public class MaterialTagProvider extends AbstractMaterialTagProvider {
       // tier 4
       MaterialIds.manyullyn, MaterialIds.hepatizon, MaterialIds.cinderslime,
       MaterialIds.queensSlime, MaterialIds.blazingBone, MaterialIds.blazewood,
-      MaterialIds.ancientHide,
+      MaterialIds.jeweledHide,
       // ammo
       MaterialIds.glowstone, MaterialIds.ichor, MaterialIds.quartz, MaterialIds.blaze, MaterialIds.magma
     )).addOptional(MaterialIds.necronium.location());
@@ -64,8 +67,12 @@ public class MaterialTagProvider extends AbstractMaterialTagProvider {
     ));
 
     // tier 4 is split into several parts in different books
-    tag(TinkerTags.Materials.BLAZING_BLOOD).add(loc(MaterialIds.manyullyn, MaterialIds.hepatizon, MaterialIds.queensSlime, MaterialIds.cinderslime, MaterialIds.blazingBone, MaterialIds.blazewood, MaterialIds.ancientHide))
-      .addOptional(MaterialIds.nicrosil.location());
+    tag(TinkerTags.Materials.BLAZING_BLOOD).add(loc(
+      MaterialIds.manyullyn, MaterialIds.hepatizon,
+      MaterialIds.queensSlime, MaterialIds.cinderslime,
+      MaterialIds.blazingBone, MaterialIds.blazewood,
+      MaterialIds.jeweledHide
+    )).addOptional(MaterialIds.nicrosil.location());
     tag(TinkerTags.Materials.DISTANT).add(loc(
       // tiers 1-2
       MaterialIds.chorus, MaterialIds.whitestone,
@@ -84,7 +91,7 @@ public class MaterialTagProvider extends AbstractMaterialTagProvider {
       MaterialIds.manyullyn, MaterialIds.hepatizon,
       MaterialIds.cinderslime, MaterialIds.queensSlime,
       MaterialIds.blazingBone, MaterialIds.blazewood,
-      MaterialIds.ancientHide, MaterialIds.ancient
+      MaterialIds.jeweledHide, MaterialIds.ancient
     )).addOptional(MaterialIds.necronium.location());
 
     // tag all compat materials
@@ -129,8 +136,8 @@ public class MaterialTagProvider extends AbstractMaterialTagProvider {
       // tier 3
       MaterialIds.amethystBronze,
       // tier 4
-      MaterialIds.hepatizon, MaterialIds.ancientHide, MaterialIds.knightslime
-    )).addOptional(
+      MaterialIds.hepatizon, MaterialIds.jeweledHide, MaterialIds.knightslime
+        )).addOptional(
       // tier 2
       MaterialIds.lead.location(),
       // tier 3
@@ -164,8 +171,8 @@ public class MaterialTagProvider extends AbstractMaterialTagProvider {
       // tier 3
       MaterialIds.slimesteel, MaterialIds.darkthread, MaterialIds.cobalt, MaterialIds.pigIron,
       // tier 4
-      MaterialIds.blazingBone, MaterialIds.ancientHide, MaterialIds.enderslimeVine
-    )).addOptional(
+      MaterialIds.blazingBone, MaterialIds.jeweledHide, MaterialIds.enderslimeVine
+        )).addOptional(
       // tier 1
       MaterialIds.treatedWood.location(),
       // tier 2
@@ -223,7 +230,7 @@ public class MaterialTagProvider extends AbstractMaterialTagProvider {
       // misc
       MaterialIds.blaze, MaterialIds.enderPearl, MaterialIds.dragonScale,
       // crafted
-      MaterialIds.venombone, MaterialIds.blazingBone
+      MaterialIds.venombone, MaterialIds.blazingBone, MaterialIds.knightmetal
     )).addOptional(MaterialIds.necronium.location());
   }
 

@@ -1,4 +1,19 @@
 {
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:or",
+      "values": [
+        {
+          "type": "tconstruct:config",
+          "prop": "force_integration_materials"
+        },
+        {
+          "type": "mantle:tag_filled",
+          "tag": "forge:ingots/signalum"
+        }
+      ]
+    }
+  ],
   "block_effects": [
     {
       "type": "tconstruct:explosion",
@@ -14,21 +29,6 @@
         "each_level": 1.0,
         "flat": 1.0
       }
-    }
-  ],
-  "conditions": [
-    {
-      "type": "neoforge:or",
-      "values": [
-        {
-          "type": "tconstruct:config",
-          "prop": "force_integration_materials"
-        },
-        {
-          "type": "mantle:tag_filled",
-          "tag": "forge:ingots/signalum"
-        }
-      ]
     }
   ],
   "entity_effects": [

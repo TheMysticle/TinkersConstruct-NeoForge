@@ -32,7 +32,7 @@ import java.util.Map;
 
 /** Handles fetching textures for armor trims */
 public record TrimArmorTextureSupplier(ModifierId modifier, ResourceLocation patternKey, ResourceLocation materialKey) implements ArmorTextureSupplier {
-  private static final ModifierId DEFAULT_TRIM_MODIFIER = new ModifierId(TinkerModifiers.trim.getId());
+  private static final ModifierId DEFAULT_TRIM_MODIFIER = TinkerModifiers.trim.getModifierId();
   /** Default instant using the tinkers modifier */
   public static TrimArmorTextureSupplier INSTANCE = new TrimArmorTextureSupplier(DEFAULT_TRIM_MODIFIER);
   public static final RecordLoadable<TrimArmorTextureSupplier> LOADER = RecordLoadable.create(ModifierId.PARSER.defaultField("modifier", DEFAULT_TRIM_MODIFIER, TrimArmorTextureSupplier::modifier), TrimArmorTextureSupplier::new);

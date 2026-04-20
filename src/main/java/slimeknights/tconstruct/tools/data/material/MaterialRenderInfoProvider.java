@@ -103,6 +103,7 @@ public class MaterialRenderInfoProvider extends AbstractMaterialRenderInfoProvid
     buildRenderInfo(MaterialIds.knightslime);
     buildRenderInfo(MaterialIds.blazingBone).color(0xF2D500).fallbacks("bone", "rock").luminosity(15);
     buildRenderInfo(MaterialIds.blazewood).fallbacks("wood", "stick").luminosity(7);
+    buildRenderInfo(MaterialIds.jeweledHide);
     buildRenderInfo(MaterialIds.ancientHide);
     buildRenderInfo(MaterialIds.ancient);
     buildRenderInfo(MaterialIds.enderslimeVine).color(0xa92dff).fallbacks("vine");
@@ -149,9 +150,11 @@ public class MaterialRenderInfoProvider extends AbstractMaterialRenderInfoProvid
     buildRenderInfo(MaterialIds.glowstone).luminosity(15);
     buildRenderInfo(MaterialIds.gunpowder);
     buildRenderInfo(MaterialIds.redstone);
+    buildRenderInfo(MaterialIds.turtle);
     buildRenderInfo(MaterialIds.dragonScale);
     buildRenderInfo(MaterialIds.endRod);
     redirect(MaterialIds.magnetite, MaterialIds.steel);
+    redirect(MaterialIds.kobold, MaterialIds.cobalt);
     redirect(MaterialIds.shulker, MaterialIds.chorus);
     redirect(MaterialIds.knightly, MaterialIds.knightmetal);
 

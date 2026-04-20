@@ -92,6 +92,7 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
       ModifierIds.stripping.location(), ModifierIds.tilling.location(), ModifierIds.pathing.location(),
       ModifierIds.shears.location(), ModifierIds.silkyShears.location(),
       ModifierIds.harvest.location(), ModifierIds.fishing.location(),
+      ModifierIds.slimeball.location(), ModifierIds.sliver.location(),
       ModifierIds.pockets.location()
     );
     tag(BLOCK_WHILE_CHARGING).add(
@@ -184,7 +185,8 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
       ModifierIds.bulkQuiver.location(), ModifierIds.trickQuiver.location(),
       ModifierIds.crystalshot.location(), ModifierIds.multishot.location(), ModifierIds.ballista.location(),
       ModifierIds.grapple.location(),
-      ModifierIds.channeling.location(), ModifierIds.returning.location());
+      ModifierIds.channeling.location(), ModifierIds.returning.location(),
+      ModifierIds.slimeball.location(), ModifierIds.sliver.location());
     this.tag(INTERACTION_ABILITIES).add(
       ModifierIds.bucketing.location(), ModifierIds.firestarter.location(), ModifierIds.glowing.location(),
       ModifierIds.pathing.location(), ModifierIds.stripping.location(), ModifierIds.tilling.location(), ModifierIds.brushing.location(),
@@ -215,11 +217,12 @@ public class ModifierTagProvider extends AbstractModifierTagProvider {
       ModifierIds.blindshot.location(), ModifierIds.barebow.location());
     this.tag(BONUS_SLOTLESS).add(
       ModifierIds.draconic.location(), ModifierIds.rebalanced.location(), ModifierIds.redirected.location(),
+      TinkerModifiers.trim.getId(),
       ModifierIds.harmonious.location(), ModifierIds.recapitated.location(), ModifierIds.forecast.location(), ModifierIds.writable.location())
       .addOptional(ModifierIds.embossed.location());
     this.tag(COSMETIC_SLOTLESS).add(
       ModifierIds.shiny.location(),
-      TinkerModifiers.dyed.getId(), TinkerModifiers.embellishment.getId(), TinkerModifiers.trim.getId(),
+      TinkerModifiers.dyed.getId(), TinkerModifiers.embellishment.getId(), TinkerModifiers.banner.getId(),
       ModifierIds.farsighted.location(), ModifierIds.nearsighted.location());
   }
 

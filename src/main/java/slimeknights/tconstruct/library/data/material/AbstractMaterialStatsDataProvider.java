@@ -26,6 +26,14 @@ import java.util.concurrent.CompletableFuture;
 
 /** Base data generator for use in addons, depends on the regular material provider */
 public abstract class AbstractMaterialStatsDataProvider extends GenericDataProvider {
+  /** Standard wearable armor slots, excluding BODY which is reserved for animal armor. */
+  private static final ArmorItem.Type[] WEARABLE_ARMOR_TYPES = {
+    ArmorItem.Type.HELMET,
+    ArmorItem.Type.CHESTPLATE,
+    ArmorItem.Type.LEGGINGS,
+    ArmorItem.Type.BOOTS
+  };
+
   /** All material stats generated so far */
   private final Map<MaterialId, MaterialStats> allMaterialStats = new HashMap<>();
   /* Materials data provider for validation */
@@ -90,7 +98,7 @@ public abstract class AbstractMaterialStatsDataProvider extends GenericDataProvi
    */
   protected void addArmorStats(MaterialId location, ArmorModuleBuilder<? extends IMaterialStats> statBuilder, IMaterialStats... otherStats) {
     IMaterialStats[] stats = new IMaterialStats[4];
-    for (ArmorItem.Type slotType : ArmorItem.Type.values()) {
+    for (ArmorItem.Type slotType : WEARABLE_ARMOR_TYPES) {
       stats[slotType.ordinal()] = statBuilder.build(slotType);
     }
     addMaterialStats(location, stats);

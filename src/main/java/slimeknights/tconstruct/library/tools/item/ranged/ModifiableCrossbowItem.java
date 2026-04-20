@@ -30,11 +30,13 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import slimeknights.mantle.client.TooltipKey;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.TinkerTags;
+import slimeknights.tconstruct.library.client.item.ModifiableCrossbowClientExtension;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.modifiers.ModifierHooks;
 import slimeknights.tconstruct.library.modifiers.hook.build.ConditionalStatModifierHook;
@@ -55,6 +57,7 @@ import slimeknights.tconstruct.tools.TinkerModifiers;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import static slimeknights.tconstruct.library.modifiers.hook.interaction.GeneralInteractionModifierHook.KEY_DRAWTIME;
@@ -106,12 +109,17 @@ public class ModifiableCrossbowItem extends ModifiableLauncherItem {
   @Override
   public UseAnim getUseAnimation(ItemStack stack) {
     // crossbow is superhardcoded to crossbows, so use none and rely on the model
-    return ModifierUtil.blockWhileCharging(ToolStack.from(stack), UseAnim.NONE);
+    return ModifierUtil.blockWhileCharging(ToolStack.from(stack), UseAnim.CROSSBOW);
   }
 
   @Override
   public boolean useOnRelease(ItemStack stack) {
     return true;
+  }
+
+  @Override
+  public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+    consumer.accept(ModifiableCrossbowClientExtension.INSTANCE);
   }
 
 
@@ -149,7 +157,7 @@ public class ModifiableCrossbowItem extends ModifiableLauncherItem {
       // if we have ammo, start charging
       ItemStack ammo = BowAmmoModifierHook.getAmmo(tool, bow, player, getSupportedHeldProjectiles());
       if (!ammo.isEmpty() || tool.getModifiers().has(TinkerTags.Modifiers.CHARGE_EMPTY_BOW_WITH_DRAWTIME)) {
-        GeneralInteractionModifierHook.startDrawtime(tool, player, 1);
+        GeneralInteractionModifierHook.startDrawing(tool, player, 1);
         if (!ammo.isEmpty()) {
           if (storeDrawingItem) {
             persistentData.put(KEY_DRAWBACK_AMMO, ammo.saveOptional(level.registryAccess()));

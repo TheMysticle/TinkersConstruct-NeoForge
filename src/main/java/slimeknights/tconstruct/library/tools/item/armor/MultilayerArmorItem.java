@@ -11,14 +11,23 @@ import slimeknights.tconstruct.library.tools.definition.ToolDefinition;
 public class MultilayerArmorItem extends ModifiableArmorItem {
   private final ResourceLocation name;
   public MultilayerArmorItem(ModifiableArmorMaterial material, ArmorItem.Type slot, Properties properties) {
+    this(material, slot, properties, material.getId());
+  }
+
+  public MultilayerArmorItem(ModifiableArmorMaterial material, ArmorItem.Type slot, Properties properties, ResourceLocation name) {
     super(material, slot, properties);
-    this.name = material.getId();
+    this.name = name;
   }
 
   @SuppressWarnings("removal")
   public MultilayerArmorItem(Holder<ArmorMaterial> material, ArmorItem.Type slot, Properties properties, ToolDefinition toolDefinition) {
     super(material, slot, properties, toolDefinition);
     this.name = material.unwrapKey().map(key -> key.location()).orElse(ResourceLocation.withDefaultNamespace("unknown"));
+  }
+
+  public MultilayerArmorItem(DummyArmorMaterial material, ArmorItem.Type slot, Properties properties, ToolDefinition toolDefinition) {
+    super(material.getHolder(), slot, properties, toolDefinition);
+    this.name = material.getId();
   }
 
   /** Gets the name of this armor for model resolution */
