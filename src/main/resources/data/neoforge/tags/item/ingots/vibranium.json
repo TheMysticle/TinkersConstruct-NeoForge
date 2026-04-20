@@ -8,7 +8,7 @@
   "replace": false,
   "values": [
     {
-      "id": "c:ingots/vibranium",
+      "id": "#c:ingots/vibranium",
       "required": false
     }
   ]

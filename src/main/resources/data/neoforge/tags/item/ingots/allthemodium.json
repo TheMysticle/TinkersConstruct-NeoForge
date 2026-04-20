@@ -8,7 +8,7 @@
   "replace": false,
   "values": [
     {
-      "id": "c:ingots/allthemodium",
+      "id": "#c:ingots/allthemodium",
       "required": false
     }
   ]

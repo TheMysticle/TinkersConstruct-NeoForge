@@ -8,7 +8,7 @@
   "replace": false,
   "values": [
     {
-      "id": "c:raw_materials/unobtainium",
+      "id": "#c:raw_materials/unobtainium",
       "required": false
     }
   ]

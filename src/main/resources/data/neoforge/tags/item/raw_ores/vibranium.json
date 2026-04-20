@@ -8,7 +8,7 @@
   "replace": false,
   "values": [
     {
-      "id": "c:raw_materials/vibranium",
+      "id": "#c:raw_materials/vibranium",
       "required": false
     }
   ]

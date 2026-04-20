@@ -8,7 +8,7 @@
   "replace": false,
   "values": [
     {
-      "id": "c:nuggets/unobtainium",
+      "id": "#c:nuggets/unobtainium",
       "required": false
     }
   ]
