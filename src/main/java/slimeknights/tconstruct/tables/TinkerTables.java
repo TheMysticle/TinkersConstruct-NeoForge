@@ -33,6 +33,7 @@ import slimeknights.tconstruct.library.recipe.material.ShapelessMaterialsRecipe;
 import slimeknights.tconstruct.library.recipe.partbuilder.ItemPartRecipe;
 import slimeknights.tconstruct.library.recipe.partbuilder.PartRecipe;
 import slimeknights.tconstruct.library.recipe.partbuilder.recycle.PartBuilderRecycle;
+import slimeknights.tconstruct.library.recipe.partbuilder.recycle.PartBuilderRecycleSerializer;
 import slimeknights.tconstruct.library.recipe.tinkerstation.building.FixedMaterialSwappingRecipe;
 import slimeknights.tconstruct.library.recipe.tinkerstation.building.PartSwappingOverrideRecipe;
 import slimeknights.tconstruct.library.recipe.tinkerstation.building.ToolBuildingRecipe;
@@ -156,7 +157,7 @@ public final class TinkerTables extends TinkerModule {
   public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PartRecipe>> partRecipeSerializer = RECIPE_SERIALIZERS.register("part_builder", () -> TConstructLoadableRecipeSerializer.of(PartRecipe.LOADER));
   public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<ItemPartRecipe>> itemPartBuilderSerializer = RECIPE_SERIALIZERS.register("item_part_builder", () -> TConstructLoadableRecipeSerializer.of(ItemPartRecipe.LOADER));
   public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PartBuilderToolRecycle>> partBuilderToolRecycling = RECIPE_SERIALIZERS.register("part_builder_tool_recycling", () -> TConstructLoadableRecipeSerializer.of(PartBuilderToolRecycle.LOADER));
-  public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PartBuilderRecycle>> partBuilderDamageableRecycling = RECIPE_SERIALIZERS.register("part_builder_recycling", () -> TConstructLoadableRecipeSerializer.of(PartBuilderRecycle.LOADER));
+  public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<PartBuilderRecycle>> partBuilderDamageableRecycling = RECIPE_SERIALIZERS.register("part_builder_recycling", PartBuilderRecycleSerializer::new);
   // repair - standard
   public static final DeferredHolder<RecipeSerializer<?>, SimpleRecipeSerializer<TinkerStationRepairRecipe>> tinkerStationRepairSerializer = RECIPE_SERIALIZERS.register("tinker_station_repair", () -> new SimpleRecipeSerializer<>(() -> new TinkerStationRepairRecipe()));
   public static final DeferredHolder<RecipeSerializer<?>, SimpleRecipeSerializer<CraftingTableRepairKitRecipe>> craftingTableRepairSerializer = RECIPE_SERIALIZERS.register("crafting_table_repair", () -> new SimpleRecipeSerializer<>(() -> new CraftingTableRepairKitRecipe(net.minecraft.world.item.crafting.CraftingBookCategory.EQUIPMENT)));

@@ -401,28 +401,28 @@ public class TableRecipeProvider extends BaseRecipeProvider {
       Map.of(scale, ItemNameOutput.fromName(nagaScale, 7)), tfCondition);
 
     // ironwood armor and tools
-    TagKey<Item> ironwoodIngot = ItemTags.create(Mantle.commonResource("ingots/ironwood"));
+    ResourceLocation ironwoodIngot = tf.apply("ironwood_ingot");
     saveRawRecyclingRecipe(location(folder + "twilightforest/ironwood_axe"), serializerKey,
       ItemNameIngredient.from(tf.apply("ironwood_pickaxe"), tf.apply("ironwood_axe")),
-      Map.of(ingot, ItemOutput.fromTag(ironwoodIngot, 3)), tfCondition);
+      Map.of(ingot, ItemNameOutput.fromName(ironwoodIngot, 3)), tfCondition);
     saveRawRecyclingRecipe(location(folder + "twilightforest/ironwood_sword"), serializerKey,
       ItemNameIngredient.from(tf.apply("ironwood_sword"), tf.apply("ironwood_hoe")),
-      Map.of(ingot, ItemOutput.fromTag(ironwoodIngot, 2)), tfCondition);
+      Map.of(ingot, ItemNameOutput.fromName(ironwoodIngot, 2)), tfCondition);
     saveRawRecyclingRecipe(location(folder + "twilightforest/ironwood_shovel"), serializerKey,
       ItemNameIngredient.from(tf.apply("ironwood_shovel")),
-      Map.of(ingot, ItemOutput.fromTag(ironwoodIngot, 1)), tfCondition);
+      Map.of(ingot, ItemNameOutput.fromName(ironwoodIngot, 1)), tfCondition);
     saveRawRecyclingRecipe(location(folder + "twilightforest/ironwood_helmet"), serializerKey,
       ItemNameIngredient.from(tf.apply("ironwood_helmet")),
-      Map.of(ingot, ItemOutput.fromTag(ironwoodIngot, 5)), tfCondition);
+      Map.of(ingot, ItemNameOutput.fromName(ironwoodIngot, 5)), tfCondition);
     saveRawRecyclingRecipe(location(folder + "twilightforest/ironwood_chestplate"), serializerKey,
       ItemNameIngredient.from(tf.apply("ironwood_chestplate")),
-      Map.of(ingot, ItemOutput.fromTag(ironwoodIngot, 8)), tfCondition);
+      Map.of(ingot, ItemNameOutput.fromName(ironwoodIngot, 8)), tfCondition);
     saveRawRecyclingRecipe(location(folder + "twilightforest/ironwood_leggings"), serializerKey,
       ItemNameIngredient.from(tf.apply("ironwood_leggings")),
-      Map.of(ingot, ItemOutput.fromTag(ironwoodIngot, 7)), tfCondition);
+      Map.of(ingot, ItemNameOutput.fromName(ironwoodIngot, 7)), tfCondition);
     saveRawRecyclingRecipe(location(folder + "twilightforest/ironwood_boots"), serializerKey,
       ItemNameIngredient.from(tf.apply("ironwood_boots")),
-      Map.of(ingot, ItemOutput.fromTag(ironwoodIngot, 4)), tfCondition);
+      Map.of(ingot, ItemNameOutput.fromName(ironwoodIngot, 4)), tfCondition);
 
     // arctic
     ResourceLocation arcticFur = tf.apply("arctic_fur");

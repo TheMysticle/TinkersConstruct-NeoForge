@@ -25,6 +25,7 @@ import slimeknights.tconstruct.library.recipe.partbuilder.Pattern;
 import slimeknights.tconstruct.library.tools.helper.ModifierUtil;
 import slimeknights.tconstruct.tables.TinkerTables;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -62,8 +63,36 @@ public class PartBuilderRecycle implements IPartBuilderRecipe, IMultiRecipe<Disp
     this.id = id;
     this.tool = tool;
     this.pattern = pattern;
-    this.results = results;
-    this.resultCount = results.values().stream().mapToInt(ItemOutput::getCount).sum();
+    this.results = sanitizeResults(id, results);
+    this.resultCount = this.results.values().stream().mapToInt(ItemOutput::getCount).sum();
+  }
+
+  private static Map<Pattern,ItemOutput> sanitizeResults(ResourceLocation id, Map<Pattern,ItemOutput> results) {
+    LinkedHashMap<Pattern,ItemOutput> sanitized = new LinkedHashMap<>();
+    for (Entry<Pattern,ItemOutput> entry : results.entrySet()) {
+      ItemOutput output = entry.getValue();
+      if (!output.isEmpty() && !output.get().isEmpty()) {
+        sanitized.put(entry.getKey(), output);
+      } else {
+        TConstruct.LOG.warn("Disabling empty recycling output {} in recipe {}: {}", entry.getKey(), id, output.serialize(true));
+      }
+    }
+    if (sanitized.isEmpty() && !results.isEmpty()) {
+      TConstruct.LOG.warn("Disabling part builder recycling recipe {} because all outputs were empty", id);
+    }
+    return sanitized;
+  }
+
+  public Ingredient getToolIngredient() {
+    return tool;
+  }
+
+  public Ingredient getPatternIngredient() {
+    return pattern;
+  }
+
+  public Map<Pattern,ItemOutput> getResults() {
+    return results;
   }
 
   @Override
