@@ -12,17 +12,20 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import slimeknights.mantle.block.entity.MantleBlockEntity;
 import slimeknights.tconstruct.common.network.TinkerNetwork;
+import slimeknights.tconstruct.library.fluid.IMultitankListChange;
+import slimeknights.tconstruct.library.utils.WeakListenerList;
 import slimeknights.tconstruct.smeltery.network.SmelteryTankUpdatePacket;
 import slimeknights.tconstruct.smeltery.block.entity.tank.ISmelteryTankHandler.FluidChange;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.function.Consumer;
 
 /**
  * Fluid handler implementation for the smeltery
  */
-public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> implements IFluidHandler {
+public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> implements IFluidHandler, IMultitankListChange {
   private final T parent;
   /** Fluids actually contained in the tank */
   @Getter
@@ -32,6 +35,8 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
   /** Current amount of fluid in the tank */
   @Getter
   private int contained;
+  /** Listener for the tank list changing */
+  private final WeakListenerList tankListChange = new WeakListenerList();
 
   public SmelteryTank(T parent) {
     fluids = Lists.newArrayList();
@@ -130,6 +135,7 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
       fluids.remove(index);
       fluids.add(0, fluid);
       parent.notifyFluidsChanged(FluidChange.CHANGED, FluidStack.EMPTY);
+      tankListChange.run();
     }
   }
 
@@ -160,10 +166,13 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
 
     // check if we already have the given liquid
     for (FluidStack fluid : fluids) {
-      if (fluid.isFluidEqual(resource)) {
+      if (FluidStack.isSameFluidSameComponents(fluid, resource)) {
         // yup. add it
         fluid.grow(usable);
         parent.notifyFluidsChanged(FluidChange.CHANGED, fluid);
+        if (contained >= capacity) {
+          tankListChange.run();
+        }
         return usable;
       }
     }
@@ -173,6 +182,7 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
     resource.setAmount(usable);
     fluids.add(resource);
     parent.notifyFluidsChanged(FluidChange.ADDED, resource);
+    tankListChange.run();
     return usable;
   }
 
@@ -182,6 +192,7 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
     if (fluids.isEmpty()) {
       return FluidStack.EMPTY;
     }
+    boolean wasFull = contained >= capacity;
 
     // simply drain the first one
     FluidStack fluid = fluids.get(0);
@@ -199,8 +210,12 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
       if (fluid.getAmount() <= 0) {
         fluids.remove(fluid);
         parent.notifyFluidsChanged(FluidChange.REMOVED, fluid);
+        tankListChange.run();
       } else {
         parent.notifyFluidsChanged(FluidChange.CHANGED, fluid);
+        if (wasFull && contained < capacity) {
+          tankListChange.run();
+        }
       }
     }
 
@@ -211,11 +226,12 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
   @Nonnull
   @Override
   public FluidStack drain(FluidStack toDrain, FluidAction action) {
+    boolean wasFull = contained >= capacity;
     // search for the resource
     ListIterator<FluidStack> iter = fluids.listIterator();
     while (iter.hasNext()) {
       FluidStack fluid = iter.next();
-      if (fluid.isFluidEqual(toDrain)) {
+      if (FluidStack.isSameFluidSameComponents(fluid, toDrain)) {
         // if found, determine how much we can drain
         int drainable = Math.min(toDrain.getAmount(), fluid.getAmount());
 
@@ -231,8 +247,12 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
           if (fluid.getAmount() <= 0) {
             iter.remove();
             parent.notifyFluidsChanged(FluidChange.REMOVED, fluid);
+            tankListChange.run();
           } else {
             parent.notifyFluidsChanged(FluidChange.CHANGED, fluid);
+            if (wasFull && contained < capacity) {
+              tankListChange.run();
+            }
           }
         }
 
@@ -259,8 +279,9 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
     this.fluids.addAll(fluids);
     contained = fluids.stream().mapToInt(FluidStack::getAmount).reduce(0, Integer::sum);
     FluidStack newFirst = getFluidInTank(0);
-    if (!oldFirst.isFluidEqual(newFirst)) {
+    if (!FluidStack.isSameFluidSameComponents(oldFirst, newFirst)) {
       parent.notifyFluidsChanged(FluidChange.ORDER_CHANGED, newFirst);
+      tankListChange.run();
     }
   }
 
@@ -289,5 +310,18 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
       }
     }
     capacity = tag.getInt(TAG_CAPACITY);
+  }
+
+
+  /* Listeners */
+
+  @Override
+  public <TE> void addTankListListener(TE parent, Consumer<TE> listener) {
+    tankListChange.addListener(parent, listener);
+  }
+
+  @Override
+  public void removeTankListListeners(Object parent) {
+    tankListChange.removeListeners(parent);
   }
 }
