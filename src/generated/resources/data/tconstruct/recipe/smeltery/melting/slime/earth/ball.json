@@ -1,7 +1,7 @@
 {
   "type": "tconstruct:melting",
   "ingredient": {
-    "tag": "forge:slimeball/earth"
+    "tag": "c:slimeball/earth"
   },
   "result": {
     "amount": 250,

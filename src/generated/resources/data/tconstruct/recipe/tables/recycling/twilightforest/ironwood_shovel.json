@@ -10,10 +10,7 @@
     "item": "tconstruct:venom_bottle"
   },
   "results": {
-    "tconstruct:ingot": {
-      "count": 1,
-      "item": "twilightforest:ironwood_ingot"
-    }
+    "tconstruct:ingot": "twilightforest:ironwood_ingot"
   },
   "tool": {
     "item": "twilightforest:ironwood_shovel"

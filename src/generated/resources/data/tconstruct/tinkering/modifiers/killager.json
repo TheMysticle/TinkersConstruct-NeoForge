@@ -10,7 +10,7 @@
         "predicates": [
           {
             "type": "mantle:tag",
-            "tag": "forge:illagers"
+            "tag": "c:illagers"
           },
           {
             "type": "mantle:tag",

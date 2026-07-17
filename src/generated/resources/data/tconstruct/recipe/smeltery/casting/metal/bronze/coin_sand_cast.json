@@ -13,7 +13,7 @@
   "cooling_time": 33,
   "fluid": {
     "amount": 30,
-    "tag": "forge:molten_bronze"
+    "tag": "c:molten_bronze"
   },
   "result": {
     "tag": "c:coins/bronze"

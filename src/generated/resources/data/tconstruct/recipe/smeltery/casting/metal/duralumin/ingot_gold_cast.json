@@ -12,7 +12,7 @@
   "cooling_time": 54,
   "fluid": {
     "amount": 90,
-    "tag": "forge:molten_duralumin"
+    "tag": "c:molten_duralumin"
   },
   "result": {
     "tag": "c:ingots/duralumin"

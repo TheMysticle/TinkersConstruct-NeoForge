@@ -13,7 +13,7 @@
   "cooling_time": 20,
   "fluid": {
     "amount": 10,
-    "tag": "forge:molten_silver"
+    "tag": "c:molten_silver"
   },
   "result": {
     "tag": "c:nuggets/silver"

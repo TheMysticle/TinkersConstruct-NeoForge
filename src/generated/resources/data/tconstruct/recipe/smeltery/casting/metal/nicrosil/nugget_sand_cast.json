@@ -13,7 +13,7 @@
   "cooling_time": 23,
   "fluid": {
     "amount": 10,
-    "tag": "forge:molten_nicrosil"
+    "tag": "c:molten_nicrosil"
   },
   "result": {
     "tag": "c:nuggets/nicrosil"

@@ -1,5 +1,5 @@
 {
-  "parent": "tconstruct:world/ender_island",
+  "parent": "tconstruct:world/sky_island",
   "criteria": {
     "crafted_boots": {
       "conditions": {
@@ -15,7 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": "tconstruct:slime_chestplate"
+            "items": "tconstruct:slimy_chestplate"
           }
         ]
       },
@@ -50,18 +50,14 @@
     "icon": {
       "components": {
         "minecraft:custom_data": {
-          "tic_display": 1,
           "tic_materials": [
-            "tconstruct:ui_render#head",
-            "tconstruct:ui_render#handle",
-            "tconstruct:ui_render#extra",
-            "tconstruct:ui_render#large",
-            "tconstruct:ui_render#extra_large"
+            "tconstruct:bone",
+            "tconstruct:skyslime"
           ]
         }
       },
       "count": 1,
-      "id": "tconstruct:slime_chestplate"
+      "id": "tconstruct:slimy_chestplate"
     },
     "title": {
       "translate": "advancements.tconstruct.world.slimesuit.title"

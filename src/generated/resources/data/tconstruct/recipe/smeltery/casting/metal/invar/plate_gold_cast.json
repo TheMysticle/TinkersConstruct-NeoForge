@@ -12,7 +12,7 @@
   "cooling_time": 63,
   "fluid": {
     "amount": 90,
-    "tag": "forge:molten_invar"
+    "tag": "c:molten_invar"
   },
   "result": {
     "tag": "c:plates/invar"

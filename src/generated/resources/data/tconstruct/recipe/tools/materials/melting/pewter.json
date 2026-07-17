@@ -5,15 +5,15 @@
       "values": [
         {
           "type": "mantle:tag_filled",
-          "tag": "forge:ingots/pewter"
+          "tag": "c:ingots/pewter"
         },
         {
           "type": "mantle:tag_filled",
-          "tag": "forge:ingots/tin"
+          "tag": "c:ingots/tin"
         },
         {
           "type": "mantle:tag_filled",
-          "tag": "forge:ingots/lead"
+          "tag": "c:ingots/lead"
         }
       ]
     }

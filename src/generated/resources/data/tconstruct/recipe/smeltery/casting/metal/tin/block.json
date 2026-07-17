@@ -9,7 +9,7 @@
   "cooling_time": 117,
   "fluid": {
     "amount": 810,
-    "tag": "forge:molten_tin"
+    "tag": "c:molten_tin"
   },
   "result": {
     "tag": "c:storage_blocks/tin"

@@ -533,7 +533,8 @@
       "components": {
         "minecraft:custom_data": {
           "tic_materials": [
-            "tconstruct:glass"
+            "tconstruct:glass",
+            "tconstruct:enderslime"
           ]
         }
       },

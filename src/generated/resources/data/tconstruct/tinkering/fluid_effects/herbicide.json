@@ -3,7 +3,7 @@
     {
       "type": "mantle:tag_filled",
       "registry": "minecraft:fluid",
-      "tag": "forge:herbicide"
+      "tag": "c:herbicide"
     }
   ],
   "block_effects": [
@@ -80,6 +80,6 @@
   ],
   "fluid": {
     "amount": 10,
-    "tag": "forge:herbicide"
+    "tag": "c:herbicide"
   }
 }

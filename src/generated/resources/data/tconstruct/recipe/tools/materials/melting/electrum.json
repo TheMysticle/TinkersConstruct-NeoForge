@@ -5,11 +5,11 @@
       "values": [
         {
           "type": "mantle:tag_filled",
-          "tag": "forge:ingots/electrum"
+          "tag": "c:ingots/electrum"
         },
         {
           "type": "mantle:tag_filled",
-          "tag": "forge:ingots/silver"
+          "tag": "c:ingots/silver"
         }
       ]
     }

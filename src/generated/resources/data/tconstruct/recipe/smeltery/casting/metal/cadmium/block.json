@@ -9,7 +9,7 @@
   "cooling_time": 126,
   "fluid": {
     "amount": 810,
-    "tag": "forge:molten_cadmium"
+    "tag": "c:molten_cadmium"
   },
   "result": {
     "tag": "c:storage_blocks/cadmium"

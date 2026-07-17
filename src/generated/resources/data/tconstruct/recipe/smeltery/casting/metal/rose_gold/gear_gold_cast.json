@@ -12,7 +12,7 @@
   "cooling_time": 103,
   "fluid": {
     "amount": 360,
-    "tag": "forge:molten_rose_gold"
+    "tag": "c:molten_rose_gold"
   },
   "result": {
     "tag": "c:gears/rose_gold"

@@ -6,7 +6,7 @@
   "cooling_time": 22,
   "fluid": {
     "amount": 10,
-    "tag": "forge:molten_cobalt"
+    "tag": "c:molten_cobalt"
   },
   "result": "tconstruct:cobalt_nugget"
 }

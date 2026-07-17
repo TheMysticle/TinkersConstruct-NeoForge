@@ -12,7 +12,7 @@
   "cooling_time": 27,
   "fluid": {
     "amount": 30,
-    "tag": "forge:molten_aluminum"
+    "tag": "c:molten_aluminum"
   },
   "result": {
     "tag": "c:coins/aluminum"

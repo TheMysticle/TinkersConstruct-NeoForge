@@ -3,7 +3,7 @@
     {
       "type": "mantle:tag_filled",
       "registry": "minecraft:fluid",
-      "tag": "forge:redstone"
+      "tag": "c:redstone"
     }
   ],
   "block_effects": [
@@ -38,6 +38,6 @@
   ],
   "fluid": {
     "amount": 100,
-    "tag": "forge:redstone"
+    "tag": "c:redstone"
   }
 }

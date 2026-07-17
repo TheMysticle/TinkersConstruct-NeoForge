@@ -2,7 +2,7 @@
   "neoforge:conditions": [
     {
       "type": "mantle:tag_filled",
-      "tag": "forge:ingots/ironwood"
+      "tag": "c:ingots/ironwood"
     }
   ],
   "type": "tconstruct:material_melting",

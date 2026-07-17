@@ -13,7 +13,7 @@
   "cooling_time": 47,
   "fluid": {
     "amount": 90,
-    "tag": "forge:molten_aluminum"
+    "tag": "c:molten_aluminum"
   },
   "result": {
     "tag": "c:ingots/aluminum"

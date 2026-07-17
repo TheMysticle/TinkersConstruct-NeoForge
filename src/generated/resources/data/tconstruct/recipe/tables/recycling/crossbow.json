@@ -8,10 +8,6 @@
       "count": 2,
       "item": "minecraft:string"
     },
-    "tconstruct:ingot": {
-      "count": 1,
-      "tag": "c:ingots/iron"
-    },
     "tconstruct:rod": {
       "count": 3,
       "item": "minecraft:stick"

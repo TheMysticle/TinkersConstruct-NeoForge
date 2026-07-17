@@ -5,11 +5,11 @@
       "values": [
         {
           "type": "mantle:tag_filled",
-          "tag": "forge:ingots/brass"
+          "tag": "c:ingots/brass"
         },
         {
           "type": "mantle:tag_filled",
-          "tag": "forge:ingots/zinc"
+          "tag": "c:ingots/zinc"
         }
       ]
     }

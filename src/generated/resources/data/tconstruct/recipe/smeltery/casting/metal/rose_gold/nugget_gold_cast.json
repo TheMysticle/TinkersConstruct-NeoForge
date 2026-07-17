@@ -6,7 +6,7 @@
   "cooling_time": 17,
   "fluid": {
     "amount": 10,
-    "tag": "forge:molten_rose_gold"
+    "tag": "c:molten_rose_gold"
   },
   "result": "tconstruct:rose_gold_nugget"
 }

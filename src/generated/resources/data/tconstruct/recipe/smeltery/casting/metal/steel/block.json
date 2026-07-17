@@ -3,7 +3,7 @@
   "cooling_time": 194,
   "fluid": {
     "amount": 810,
-    "tag": "forge:molten_steel"
+    "tag": "c:molten_steel"
   },
   "result": "tconstruct:steel_block"
 }

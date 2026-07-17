@@ -9,7 +9,7 @@
   "cooling_time": 163,
   "fluid": {
     "amount": 810,
-    "tag": "forge:molten_duralumin"
+    "tag": "c:molten_duralumin"
   },
   "result": {
     "tag": "c:storage_blocks/duralumin"

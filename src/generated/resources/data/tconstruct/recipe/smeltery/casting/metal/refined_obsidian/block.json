@@ -9,7 +9,7 @@
   "cooling_time": 239,
   "fluid": {
     "amount": 810,
-    "tag": "forge:molten_refined_obsidian"
+    "tag": "c:molten_refined_obsidian"
   },
   "result": {
     "tag": "c:storage_blocks/refined_obsidian"
