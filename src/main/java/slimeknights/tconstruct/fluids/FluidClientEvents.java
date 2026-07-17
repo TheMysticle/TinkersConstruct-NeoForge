@@ -29,8 +29,9 @@ public class FluidClientEvents extends ClientEventBase {
           net.minecraft.client.renderer.texture.TextureAtlasSprite sprite = net.minecraft.client.Minecraft.getInstance().getModelManager().getAtlas(net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS).getSprite(s);
           //noinspection ConstantValue
           if (sprite == null || sprite.contents().name() == net.minecraft.client.renderer.texture.MissingTextureAtlasSprite.getLocation()) return -1;
-          long r = 0, g = 0, b = 0;
-          int count = 0;
+          float r = 0, g = 0, b = 0;
+          float count = 0;
+          float[] hsb = new float[3];
           try {
               net.minecraft.client.renderer.texture.SpriteContents contents = sprite.contents();
               for (int x = 0; x < contents.width(); x++) {
@@ -38,16 +39,29 @@ public class FluidClientEvents extends ClientEventBase {
                       int argb = sprite.getPixelRGBA(0, x, y);
                       int ca = argb >> 24 & 0xFF;
                       if (ca > 0x7F) {
-                          r += argb & 0xFF;
-                          g += (argb >> 8) & 0xFF;
-                          b += (argb >> 16) & 0xFF;
-                          count++;
+                          int cr = argb & 0xFF;
+                          int cg = (argb >> 8) & 0xFF;
+                          int cb = (argb >> 16) & 0xFF;
+                          if (Math.max(cr, Math.max(cg, cb)) > 0x1F) {
+                              java.awt.Color.RGBtoHSB(cr, cg, cb, hsb);
+                              float weight = hsb[1] + 0.1f;
+                              r += cr * weight;
+                              g += cg * weight;
+                              b += cb * weight;
+                              count += weight;
+                          }
                       }
                   }
               }
           } catch (Exception e) { return -1; }
           if (count == 0) return -1;
-          return 0xFF000000 | ((int)(r / count) << 16) | ((int)(g / count) << 8) | (int)(b / count);
+          r /= count;
+          g /= count;
+          b /= count;
+          java.awt.Color.RGBtoHSB((int)r, (int)g, (int)b, hsb);
+          hsb[1] = Math.min(1.0f, hsb[1] * 1.25f);
+          hsb[2] = Math.min(1.0f, hsb[2] * 1.25f);
+          return java.awt.Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
       });
   }
   @SubscribeEvent
