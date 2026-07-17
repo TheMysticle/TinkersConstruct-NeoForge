@@ -14,7 +14,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import slimeknights.mantle.registration.object.FlowingFluidObject;
 import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.common.ClientEventBase;
-import slimeknights.tconstruct.library.client.model.FluidContainerModel;
 
 @EventBusSubscriber(modid = TConstruct.MOD_ID, value = Dist.CLIENT, bus = Bus.MOD)
 public class FluidClientEvents extends ClientEventBase {
@@ -40,13 +39,7 @@ public class FluidClientEvents extends ClientEventBase {
     event.register((stack, index) -> index > 0 ? -1 : stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getColor(), TinkerFluids.potion.asItem());
   }
 
-  @SubscribeEvent
-  static void registerModelLoaders(RegisterGeometryLoaders event) {
-    event.register(TConstruct.getResource("fluid_container"), FluidContainerModel.LOADER);
-  }
-
-  private static void setTranslucent(FlowingFluidObject<?> fluid) {
-    ItemBlockRenderTypes.setRenderLayer(fluid.getStill(), RenderType.translucent());
+  private static void setTranslucent(FlowingFluidObject<?> fluid) {    ItemBlockRenderTypes.setRenderLayer(fluid.getStill(), RenderType.translucent());
     ItemBlockRenderTypes.setRenderLayer(fluid.getFlowing(), RenderType.translucent());
   }
 }

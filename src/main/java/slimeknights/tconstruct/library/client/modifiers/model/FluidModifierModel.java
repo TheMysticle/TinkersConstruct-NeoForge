@@ -20,7 +20,6 @@ import slimeknights.mantle.client.model.util.ColoredBlockModel;
 import slimeknights.mantle.data.loadable.record.RecordLoadable;
 import slimeknights.mantle.util.ItemLayerPixels;
 import slimeknights.tconstruct.TConstruct;
-import slimeknights.tconstruct.library.client.model.FluidContainerModel;
 import slimeknights.tconstruct.library.modifiers.ModifierEntry;
 import slimeknights.tconstruct.library.tools.capability.fluid.ToolTankHelper;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
@@ -83,6 +82,8 @@ public record FluidModifierModel(Material small, @Nullable Material large, ToolT
     }
   }
 
+  private static final Transformation FLUID_TRANSFORM = new Transformation(new Vector3f(), new org.joml.Quaternionf(), new Vector3f(1, 1, 1.002f), new org.joml.Quaternionf());
+
   /** Adds quads for the given fluid */
   public static void addQuads(FluidStack fluid, Material template, Function<Material,TextureAtlasSprite> spriteGetter, Transformation transforms, Consumer<Collection<BakedQuad>> quadConsumer) {
     // must have texture for the proper state
@@ -93,7 +94,7 @@ public record FluidModifierModel(Material small, @Nullable Material large, ToolT
     // build fluid like the forge dynamic container model
     List<BlockElement> unbaked = UnbakedGeometryHelper.createUnbakedItemMaskElements(-1, spriteGetter.apply(template)); // Use template as mask
     // TODO: is there anything that can be done about the fluid? to prevent weird offsets?
-    List<BakedQuad> fluidQuads = UnbakedGeometryHelper.bakeElements(unbaked, mat -> fluidSprite, new SimpleModelState(transforms.applyOrigin(ORIGIN).compose(FluidContainerModel.FLUID_TRANSFORM), false)); // Bake with fluid texture
+    List<BakedQuad> fluidQuads = UnbakedGeometryHelper.bakeElements(unbaked, mat -> fluidSprite, new SimpleModelState(transforms.applyOrigin(ORIGIN).compose(FLUID_TRANSFORM), false)); // Bake with fluid texture
 
     // apply brightness and color
     int luminosity = fluid.getFluid().getFluidType().getLightLevel(fluid);
