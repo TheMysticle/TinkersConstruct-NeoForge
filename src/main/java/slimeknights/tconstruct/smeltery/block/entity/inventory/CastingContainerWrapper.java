@@ -46,4 +46,9 @@ public class CastingContainerWrapper implements ICastingContainer {
   public void useOutput() {
     switchSlots = true;
   }
+
+  @Override
+  public boolean isEmpty() {
+    return getStack().isEmpty() && (fluid == null || fluid.isEmpty());
+  }
 }
