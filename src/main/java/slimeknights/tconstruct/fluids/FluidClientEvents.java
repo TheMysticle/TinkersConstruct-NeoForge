@@ -86,8 +86,8 @@ public class FluidClientEvents extends ClientEventBase {
     event.register((stack, index) -> index > 0 ? -1 : stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getColor(), TinkerFluids.potion.asItem());
 
     for (var item : BuiltInRegistries.ITEM) {
-      if (BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(TConstruct.MOD_ID) && item instanceof BucketItem bucket) {
-        if (bucket != TinkerFluids.potion.asItem()) {
+      if (item instanceof BucketItem bucket && bucket != TinkerFluids.potion.asItem()) {
+        if (IClientFluidTypeExtensions.of(bucket.content) instanceof slimeknights.mantle.fluid.texture.ClientTextureFluidType) {
           event.register((stack, index) -> {
             if (index == 1) {
               return getFluidColor(bucket.content);
