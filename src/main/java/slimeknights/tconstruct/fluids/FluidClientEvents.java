@@ -5,6 +5,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.neoforged.api.distmarker.Dist;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.BucketItem;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.event.ModelEvent.RegisterGeometryLoaders;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -17,6 +20,36 @@ import slimeknights.tconstruct.common.ClientEventBase;
 
 @EventBusSubscriber(modid = TConstruct.MOD_ID, value = Dist.CLIENT, bus = Bus.MOD)
 public class FluidClientEvents extends ClientEventBase {
+  private static final java.util.concurrent.ConcurrentHashMap<net.minecraft.resources.ResourceLocation, Integer> COLOR_CACHE = new java.util.concurrent.ConcurrentHashMap<>();
+
+  private static int getFluidColor(net.minecraft.world.level.material.Fluid fluid) {
+      net.minecraft.resources.ResourceLocation still = IClientFluidTypeExtensions.of(fluid).getStillTexture();
+      if (still == null) return -1;
+      return COLOR_CACHE.computeIfAbsent(still, s -> {
+          net.minecraft.client.renderer.texture.TextureAtlasSprite sprite = net.minecraft.client.Minecraft.getInstance().getModelManager().getAtlas(net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS).getSprite(s);
+          //noinspection ConstantValue
+          if (sprite == null || sprite.contents().name() == net.minecraft.client.renderer.texture.MissingTextureAtlasSprite.getLocation()) return -1;
+          long r = 0, g = 0, b = 0;
+          int count = 0;
+          try {
+              net.minecraft.client.renderer.texture.SpriteContents contents = sprite.contents();
+              for (int x = 0; x < contents.width(); x++) {
+                  for (int y = 0; y < contents.height(); y++) {
+                      int argb = sprite.getPixelRGBA(0, x, y);
+                      int ca = argb >> 24 & 0xFF;
+                      if (ca > 0x7F) {
+                          r += argb & 0xFF;
+                          g += (argb >> 8) & 0xFF;
+                          b += (argb >> 16) & 0xFF;
+                          count++;
+                      }
+                  }
+              }
+          } catch (Exception e) { return -1; }
+          if (count == 0) return -1;
+          return 0xFF000000 | ((int)(r / count) << 16) | ((int)(g / count) << 8) | (int)(b / count);
+      });
+  }
   @SubscribeEvent
   static void clientSetup(final FMLClientSetupEvent event) {
     setTranslucent(TinkerFluids.honey);
@@ -37,6 +70,19 @@ public class FluidClientEvents extends ClientEventBase {
   @SubscribeEvent
   static void itemColors(final RegisterColorHandlersEvent.Item event) {
     event.register((stack, index) -> index > 0 ? -1 : stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getColor(), TinkerFluids.potion.asItem());
+
+    for (var item : BuiltInRegistries.ITEM) {
+      if (BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(TConstruct.MOD_ID) && item instanceof BucketItem bucket) {
+        if (bucket != TinkerFluids.potion.asItem()) {
+          event.register((stack, index) -> {
+            if (index == 1) {
+              return getFluidColor(bucket.content);
+            }
+            return -1;
+          }, bucket);
+        }
+      }
+    }
   }
 
   private static void setTranslucent(FlowingFluidObject<?> fluid) {    ItemBlockRenderTypes.setRenderLayer(fluid.getStill(), RenderType.translucent());

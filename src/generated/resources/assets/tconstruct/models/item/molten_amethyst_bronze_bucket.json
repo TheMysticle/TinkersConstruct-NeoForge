@@ -1,6 +1,7 @@
 {
-  "parent": "neoforge:item/bucket_drip",
-  "flip_gas": false,
-  "fluid": "tconstruct:molten_amethyst_bronze",
-  "loader": "neoforge:fluid_container"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/bucket",
+    "layer1": "tconstruct:item/potion_bucket_contents"
+  }
 }

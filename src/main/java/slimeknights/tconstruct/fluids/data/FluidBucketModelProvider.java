@@ -27,11 +27,11 @@ public class FluidBucketModelProvider extends GenericDataProvider {
   @SuppressWarnings("deprecation")  // best way to get keys
   private static JsonObject makeJson(BucketItem bucket) {
     JsonObject json = new JsonObject();
-    json.addProperty("parent", "neoforge:item/bucket_drip");
-    // using our own model as the neoforge one expects us to use item colors to handle tints, when we could just bake it in
-    json.addProperty("loader", "tconstruct:fluid_container");
-    json.addProperty("flip_gas", bucket.content.getFluidType().isLighterThanAir());
-    json.addProperty("fluid", BuiltInRegistries.FLUID.getKey(bucket.content).toString());
+    json.addProperty("parent", "minecraft:item/generated");
+    JsonObject textures = new JsonObject();
+    textures.addProperty("layer0", "minecraft:item/bucket");
+    textures.addProperty("layer1", "tconstruct:item/potion_bucket_contents");
+    json.add("textures", textures);
     return json;
   }
 
