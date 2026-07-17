@@ -6,6 +6,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.jetbrains.annotations.ApiStatus.Internal;
+
 import slimeknights.tconstruct.TConstruct;
 
 import java.util.ArrayList;
@@ -23,8 +24,14 @@ public record UpdateFluidEffectsPacket(List<FluidEffects.Entry> fluids) implemen
     List<FluidEffects.Entry> entries = new ArrayList<>(size);
     for (int i = 0; i < size; i++) {
       ResourceLocation key = buffer.readResourceLocation();
-      FluidEffects effects = FluidEffects.LOADABLE.decode(buffer, FluidEffectManager.contextBuilder(key).build());
-      entries.add(new FluidEffects.Entry(key, effects));
+      try {
+        FluidEffects effects = FluidEffects.LOADABLE.decode(buffer, FluidEffectManager.contextBuilder(key).build());
+        entries.add(new FluidEffects.Entry(key, effects));
+      } catch (RuntimeException e) {
+        // put exception in the log with a bit more info
+        TConstruct.LOG.error("Failed to decode fluid effects with ID {}", key, e);
+        throw e;
+      }
     }
     return new UpdateFluidEffectsPacket(List.copyOf(entries));
   }
@@ -32,8 +39,14 @@ public record UpdateFluidEffectsPacket(List<FluidEffects.Entry> fluids) implemen
   public void encode(FriendlyByteBuf buffer) {
     buffer.writeVarInt(fluids.size());
     for (FluidEffects.Entry entry : fluids) {
-      buffer.writeResourceLocation(entry.name());
-      FluidEffects.LOADABLE.encode(buffer, entry.effects());
+      ResourceLocation key = entry.name();
+      buffer.writeResourceLocation(key);
+      try {
+        FluidEffects.LOADABLE.encode(buffer, entry.effects());
+      } catch (RuntimeException e) {
+        TConstruct.LOG.error("Failed to encode fluid effects with ID {}", key, e);
+        throw e;
+      }
     }
   }
 

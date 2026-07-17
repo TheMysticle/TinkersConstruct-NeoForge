@@ -14,8 +14,8 @@ import slimeknights.mantle.block.entity.MantleBlockEntity;
 import slimeknights.tconstruct.common.network.TinkerNetwork;
 import slimeknights.tconstruct.library.fluid.IMultitankListChange;
 import slimeknights.tconstruct.library.utils.WeakListenerList;
-import slimeknights.tconstruct.smeltery.network.SmelteryTankUpdatePacket;
 import slimeknights.tconstruct.smeltery.block.entity.tank.ISmelteryTankHandler.FluidChange;
+import slimeknights.tconstruct.smeltery.network.SmelteryTankUpdatePacket;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -35,7 +35,7 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
   /** Current amount of fluid in the tank */
   @Getter
   private int contained;
-  /** Listener for the tank list changing */
+  /** Listener for the tank list changing */ // TODO: does this replace ISmelteryTankHandler?
   private final WeakListenerList tankListChange = new WeakListenerList();
 
   public SmelteryTank(T parent) {
@@ -170,6 +170,7 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
         // yup. add it
         fluid.grow(usable);
         parent.notifyFluidsChanged(FluidChange.CHANGED, fluid);
+        // notify as we lost the "empty tank"
         if (contained >= capacity) {
           tankListChange.run();
         }
@@ -182,6 +183,7 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
     resource.setAmount(usable);
     fluids.add(resource);
     parent.notifyFluidsChanged(FluidChange.ADDED, resource);
+    // notify as we added a new fluid
     tankListChange.run();
     return usable;
   }
@@ -213,6 +215,7 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
         tankListChange.run();
       } else {
         parent.notifyFluidsChanged(FluidChange.CHANGED, fluid);
+        // need to notify if we were full but are no longer as its adds an empty tank
         if (wasFull && contained < capacity) {
           tankListChange.run();
         }
@@ -250,6 +253,7 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
             tankListChange.run();
           } else {
             parent.notifyFluidsChanged(FluidChange.CHANGED, fluid);
+            // need to notify if we were full but are no longer as its adds an empty tank
             if (wasFull && contained < capacity) {
               tankListChange.run();
             }
@@ -322,6 +326,6 @@ public class SmelteryTank<T extends MantleBlockEntity & ISmelteryTankHandler> im
 
   @Override
   public void removeTankListListeners(Object parent) {
-    tankListChange.removeListeners(parent);
+    tankListChange.removeListener(parent);
   }
 }

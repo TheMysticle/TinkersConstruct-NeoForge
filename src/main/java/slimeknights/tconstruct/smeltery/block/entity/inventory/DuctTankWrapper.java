@@ -16,6 +16,7 @@ public class DuctTankWrapper implements IFluidHandler {
   public DuctTankWrapper(IFluidHandler parent, DuctItemHandler itemHandler) {
     this.parent = parent;
     this.itemHandler = itemHandler;
+    // clear cache when the fluid changes or the smeltery list changes
     Consumer<DuctTankWrapper> consumer = self -> self.tankMapping = null;
     itemHandler.addListener(this, consumer);
     if (parent instanceof IMultitankListChange notifier) {

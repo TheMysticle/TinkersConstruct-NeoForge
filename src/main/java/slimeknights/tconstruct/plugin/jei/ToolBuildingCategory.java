@@ -88,6 +88,12 @@ public class ToolBuildingCategory implements IRecipeCategory<RecipeHolder<ToolBu
     if (result.size() > 1 && partsAndExtras.get(0).size() == result.size()) {
       builder.createFocusLink(resultSlot, firstSlot);
     }
+
+    // add hidden materials as a hidden input for recipe lookup
+    List<ItemStack> hiddenInputs = recipe.getHiddenInputs();
+    if (!hiddenInputs.isEmpty()) {
+      builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStacks(hiddenInputs);
+    }
   }
 
   @Override

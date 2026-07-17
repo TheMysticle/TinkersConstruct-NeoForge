@@ -5,42 +5,69 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /** Runs callbacks for a number of listeners which are weakly referenced */
 public class WeakListenerList implements Runnable {
   private final List<Entry<?>> entries = new ArrayList<>();
 
-  /** Adds a listener for the given parent */
+  /**
+   * Adds a weak listener that will automatically be cleared when the parent goes away
+   * @param parent    Parent that owns the callback. When this goes out of scope, the callback stops
+   * @param listener  Callback when the event fires
+   * @param <T>  Parent type
+   */
   public <T> void addListener(T parent, Consumer<T> listener) {
+    // try to find an existing entry to reuse
+    for (Entry<?> entry : entries) {
+      if (entry.parent.get() == parent) {
+        @SuppressWarnings("unchecked")
+        Entry<T> casted = (Entry<T>) entry;
+        casted.listener = listener;
+        return;
+      }
+    }
     entries.add(new Entry<>(new WeakReference<>(parent), listener));
   }
 
-  /** Removes all listeners for the given parent */
-  public void removeListeners(Object parent) {
-    Iterator<Entry<?>> iterator = entries.iterator();
-    while (iterator.hasNext()) {
+  /**
+   * Removes any listener associated with the given object
+   * @param parent  Target object
+   */
+  public void removeListener(Object parent) {
+    for (Iterator<Entry<?>> iterator = entries.iterator(); iterator.hasNext(); ) {
       Entry<?> entry = iterator.next();
-      Object entryParent = entry.parent.get();
-      if (entryParent == null || entryParent == parent) {
+      if (entry.parent.get() == parent) {
         iterator.remove();
+        return;
       }
     }
   }
 
   @Override
   public void run() {
-    entries.removeIf(entry -> entry.run());
+    entries.removeIf(Entry.REMOVE_IF);
   }
 
-  private record Entry<T>(WeakReference<T> parent, Consumer<T> listener) {
+  private static class Entry<T> {
+    private final WeakReference<T> parent;
+    private Consumer<T> listener;
+
+    private Entry(WeakReference<T> parent, Consumer<T> listener) {
+      this.parent = parent;
+      this.listener = listener;
+    }
+
+    private static final Predicate<Entry<?>> REMOVE_IF = Entry::run;
+
     /**
-     * Runs the listener.
+     * Runs the listener
      * @return true if the listener is no longer valid.
      */
     public boolean run() {
-      T value = parent.get();
-      if (value != null) {
-        listener.accept(value);
+      T te = parent.get();
+      if (te != null) {
+        listener.accept(te);
         return false;
       }
       return true;

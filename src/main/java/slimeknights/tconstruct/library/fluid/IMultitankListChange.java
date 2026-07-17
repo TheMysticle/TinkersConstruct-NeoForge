@@ -13,7 +13,7 @@ public interface IMultitankListChange {
   <T> void addTankListListener(T parent, Consumer<T> listener);
 
   /**
-   * Removes all listeners for the given parent.
+   * Removes all tank list listeners targeting the given parent instance
    * @param parent  Parent to target
    */
   void removeTankListListeners(Object parent);

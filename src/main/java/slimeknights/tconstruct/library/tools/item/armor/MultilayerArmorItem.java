@@ -26,8 +26,12 @@ public class MultilayerArmorItem extends ModifiableArmorItem {
   }
 
   public MultilayerArmorItem(DummyArmorMaterial material, ArmorItem.Type slot, Properties properties, ToolDefinition toolDefinition) {
+    this(material, slot, properties, toolDefinition, material.getId());
+  }
+
+  public MultilayerArmorItem(DummyArmorMaterial material, ArmorItem.Type slot, Properties properties, ToolDefinition toolDefinition, ResourceLocation name) {
     super(material.getHolder(), slot, properties, toolDefinition);
-    this.name = material.getId();
+    this.name = name;
   }
 
   /** Gets the name of this armor for model resolution */

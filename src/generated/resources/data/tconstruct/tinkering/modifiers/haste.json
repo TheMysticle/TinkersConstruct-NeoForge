@@ -26,8 +26,9 @@
         "body"
       ],
       "tool": {
-        "type": "mantle:tag",
-        "tag": "tconstruct:modifiable/armor"
+        "type": "mantle:inverted",
+        "inverted_type": "mantle:tag",
+        "tag": "tconstruct:modifiable/harvest"
       }
     }
   ],

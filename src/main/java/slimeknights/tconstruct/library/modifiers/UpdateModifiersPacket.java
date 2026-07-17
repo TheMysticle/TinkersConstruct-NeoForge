@@ -84,10 +84,14 @@ public class UpdateModifiersPacket implements CustomPacketPayload {
     Map<ModifierId,Modifier> modifiers = new HashMap<>();
     for (int i = 0; i < size; i++) {
       ModifierId id = new ModifierId(buffer.readUtf(Short.MAX_VALUE));
-      Modifier modifier = ComposableModifier.LOADER.decode(buffer, ModifierManager.contextBuilder(id.location()).build());
-      // need cast to call package private method
-      modifier.setId(id);
-      modifiers.put(id, modifier);
+      try {
+        Modifier modifier = ComposableModifier.LOADER.decode(buffer, ModifierManager.contextBuilder(id.location()).build());
+        modifier.setId(id);
+        modifiers.put(id, modifier);
+      } catch (RuntimeException e) {
+        TConstruct.LOG.error("Failed to decode modifier with ID {}", id, e);
+        throw e;
+      }
     }
     // read in redirects
     size = buffer.readVarInt();
@@ -122,8 +126,14 @@ public class UpdateModifiersPacket implements CustomPacketPayload {
     // write modifiers
     buffer.writeVarInt(modifiers.size());
     for (ComposableModifier modifier : modifiers) {
-      buffer.writeResourceLocation(modifier.getId().location());
-      ComposableModifier.LOADER.encode(buffer, modifier);
+      ResourceLocation id = modifier.getId().location();
+      buffer.writeResourceLocation(id);
+      try {
+        ComposableModifier.LOADER.encode(buffer, modifier);
+      } catch (RuntimeException e) {
+        TConstruct.LOG.error("Failed to encode modifier with ID {}", id, e);
+        throw e;
+      }
     }
     // write redirects
     buffer.writeVarInt(redirects.size());

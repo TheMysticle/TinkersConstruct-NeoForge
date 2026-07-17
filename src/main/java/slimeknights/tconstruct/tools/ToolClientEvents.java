@@ -258,6 +258,7 @@ public class ToolClientEvents extends ClientEventBase {
       TinkerTools.travelersGear.forEach(brokenConsumer);
       TinkerTools.plateArmor.forEach(brokenConsumer);
       TinkerTools.slimesuit.forEach(brokenConsumer);
+      TinkerItemProperties.registerToolProperties(TinkerTools.slimeWings);
     });
   }
 
@@ -315,6 +316,7 @@ public class ToolClientEvents extends ClientEventBase {
     TinkerTools.travelersGear.forEach(brokenConsumer);
     TinkerTools.plateArmor.forEach(brokenConsumer);
     TinkerTools.slimesuit.forEach(brokenConsumer);
+    registerItemColors(colors, TinkerTools.slimeWings);
 
     // modifier crystal
     event.register((stack, index) -> {

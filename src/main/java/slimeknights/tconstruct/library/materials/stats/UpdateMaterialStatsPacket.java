@@ -5,6 +5,7 @@ import lombok.Getter;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.apache.logging.log4j.Logger;
 import slimeknights.mantle.data.loadable.Loadable;
@@ -42,11 +43,14 @@ public class UpdateMaterialStatsPacket implements CustomPacketPayload {
       int statCount = buffer.readInt();
       List<IMaterialStats> statList = new ArrayList<>();
       for (int j = 0; j < statCount; j++) {
+        ResourceLocation statId = null;
         try {
           MaterialStatType<?> statType = statTypeLoader.decode(buffer);
+          statId = statType.getId();
           statList.add(statType.getLoadable().decode(buffer, TypedMapBuilder.builder().put(MaterialStatType.CONTEXT_KEY, statType).build()));
-        } catch (Exception e) {
-          log.error("Could not deserialize stat. Are client and server in sync?", e);
+        } catch (RuntimeException e) {
+          log.error("Could not deserialize stat {} for material {}. Are client and server in sync?", statId, id, e);
+          throw e;
         }
       }
       materialToStats.put(id, statList);
@@ -58,19 +62,28 @@ public class UpdateMaterialStatsPacket implements CustomPacketPayload {
     materialToStats.forEach((materialId, stats) -> {
       buffer.writeResourceLocation(materialId.location());
       buffer.writeInt(stats.size());
-      stats.forEach(stat -> encodeStat(buffer, stat, stat.getType()));
+      for (IMaterialStats stat : stats) {
+        encodeStat(buffer, stat, stat.getType(), materialId);
+      }
     });
   }
 
   /**
    * Encodes a single material stat
-   * @param buffer  Buffer instance
-   * @param stat    Stat to encode
+   *
+   * @param buffer     Buffer instance
+   * @param stat       Stat to encode
+   * @param material   Material being encoded
    */
   @SuppressWarnings("unchecked")
-  private <T extends IMaterialStats> void encodeStat(FriendlyByteBuf buffer, IMaterialStats stat, MaterialStatType<T> type) {
-    MaterialStatsId.PARSER.encode(buffer, type.getStatId());
-    type.getLoadable().encode(buffer, (T) stat);
+  private <T extends IMaterialStats> void encodeStat(FriendlyByteBuf buffer, IMaterialStats stat, MaterialStatType<T> type, MaterialId material) {
+    try {
+      MaterialStatsId.PARSER.encode(buffer, type.getStatId());
+      type.getLoadable().encode(buffer, (T) stat);
+    } catch (RuntimeException e) {
+      TConstruct.LOG.error("Could not encode stat {} for material {}", stat.getIdentifier(), material, e);
+      throw e;
+    }
   }
 
   @Override

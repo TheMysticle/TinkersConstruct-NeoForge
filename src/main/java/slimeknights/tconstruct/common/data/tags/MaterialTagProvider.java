@@ -51,7 +51,7 @@ public class MaterialTagProvider extends AbstractMaterialTagProvider {
       // tier 4
       MaterialIds.manyullyn, MaterialIds.hepatizon, MaterialIds.cinderslime,
       MaterialIds.queensSlime, MaterialIds.blazingBone, MaterialIds.blazewood,
-      MaterialIds.jeweledHide,
+      MaterialIds.jeweledHide, MaterialIds.jadeite,
       // ammo
       MaterialIds.glowstone, MaterialIds.ichor, MaterialIds.quartz, MaterialIds.blaze, MaterialIds.magma
     )).addOptional(MaterialIds.necronium.location());

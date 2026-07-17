@@ -28,8 +28,13 @@ public class UpdateToolDefinitionDataPacket implements CustomPacketPayload {
     ImmutableMap.Builder<ResourceLocation, ToolDefinitionData> builder = ImmutableMap.builder();
     for (int i = 0; i < size; i++) {
       ResourceLocation name = buffer.readResourceLocation();
-      ToolDefinitionData data = ToolDefinitionData.LOADABLE.decode(buffer, ToolDefinitionLoader.contextBuilder(name).build());
-      builder.put(name, data);
+      try {
+        ToolDefinitionData data = ToolDefinitionData.LOADABLE.decode(buffer, ToolDefinitionLoader.contextBuilder(name).build());
+        builder.put(name, data);
+      } catch (RuntimeException e) {
+        TConstruct.LOG.error("Failed to decode Tool Definition for {}", name, e);
+        throw e;
+      }
     }
     dataMap = builder.build();
   }
@@ -37,8 +42,14 @@ public class UpdateToolDefinitionDataPacket implements CustomPacketPayload {
   public void encode(FriendlyByteBuf buffer) {
     buffer.writeVarInt(dataMap.size());
     for (Entry<ResourceLocation, ToolDefinitionData> entry : dataMap.entrySet()) {
-      buffer.writeResourceLocation(entry.getKey());
-      ToolDefinitionData.LOADABLE.encode(buffer, entry.getValue());
+      ResourceLocation name = entry.getKey();
+      buffer.writeResourceLocation(name);
+      try {
+        ToolDefinitionData.LOADABLE.encode(buffer, entry.getValue());
+      } catch (RuntimeException e) {
+        TConstruct.LOG.error("Failed to encode Tool Definition for {}", name, e);
+        throw e;
+      }
     }
   }
 

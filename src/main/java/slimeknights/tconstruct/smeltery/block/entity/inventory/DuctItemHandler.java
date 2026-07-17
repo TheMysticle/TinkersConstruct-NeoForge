@@ -48,6 +48,7 @@ public class DuctItemHandler extends SingleItemHandler<DuctBlockEntity> {
   public void setStack(ItemStack newStack) {
     Level world = parent.getLevel();
     ItemStack current = getStack();
+    // if both are empty, assume shift click so we need to update
     boolean hasChange = (current.isEmpty() && newStack.isEmpty()) || !ItemStack.matches(current, newStack);
     super.setStack(newStack);
     if (hasChange) {

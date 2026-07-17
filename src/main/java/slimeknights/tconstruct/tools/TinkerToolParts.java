@@ -33,6 +33,7 @@ import slimeknights.tconstruct.tools.stats.HandleMaterialStats;
 import slimeknights.tconstruct.tools.stats.HeadMaterialStats;
 import slimeknights.tconstruct.tools.stats.LimbMaterialStats;
 import slimeknights.tconstruct.tools.stats.PlatingMaterialStats;
+import slimeknights.tconstruct.tools.stats.RepairStats;
 import slimeknights.tconstruct.tools.stats.StatlessMaterialStats;
 
 import java.util.function.Consumer;
@@ -96,6 +97,12 @@ public final class TinkerToolParts extends TinkerModule {
   public static final EnumObject<ArmorItem.Type,ToolPartItem> plating = ITEMS.registerEnum(WEARABLE_ARMOR_TYPES, "plating", type -> new ToolPartItem(ITEM_PROPS, PlatingMaterialStats.TYPES.get(type.ordinal()).getStatId()));
   public static final ItemObject<ToolPartItem> maille = ITEMS.register("maille", () -> new ToolPartItem(ITEM_PROPS, StatlessMaterialStats.MAILLE.getIdentifier()));
   public static final ItemObject<ToolPartItem> shieldCore = ITEMS.register("shield_core", () -> new ToolPartItem(ITEM_PROPS, StatlessMaterialStats.SHIELD_CORE.getIdentifier()));
+  // slimesuit
+  public static final ItemObject<ToolPartItem> ribcage = ITEMS.register("ribcage", () -> new ToolPartItem(ITEM_PROPS, RepairStats.RIBCAGE.getStatId()));
+  public static final ItemObject<ToolPartItem> shell = ITEMS.register("shell", () -> new ToolPartItem(ITEM_PROPS, RepairStats.SHELL.getStatId()));
+  public static final ItemObject<ToolPartItem> laces = ITEMS.register("laces", () -> new ToolPartItem(ITEM_PROPS, RepairStats.LACES.getStatId()));
+
+
 
   // block entities
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MaterialBlockEntity>> materialBlock = BLOCK_ENTITIES.register("material_block", MaterialBlockEntity::new, fakeStorageBlock);
@@ -137,6 +144,10 @@ public final class TinkerToolParts extends TinkerModule {
     }
     accept(output, maille);
     accept(output, shieldCore);
+    // slimesuit
+    accept(output, ribcage);
+    accept(output, shell);
+    accept(output, laces);
 
     // end with modifier crystal dynamic listing
     ModifierCrystalItem.addVariants(output);
