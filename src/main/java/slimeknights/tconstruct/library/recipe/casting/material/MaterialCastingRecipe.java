@@ -57,7 +57,7 @@ public class MaterialCastingRecipe extends AbstractMaterialCastingRecipe impleme
 
   @Override
   public boolean matches(ICastingContainer inv, Level worldIn) {
-    if (!this.getCast().test(inv.getStack())) {
+    if (!this.testCast(inv.getStack())) {
       return false;
     }
     MaterialFluidRecipe fluid = getFluidRecipe(inv);

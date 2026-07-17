@@ -93,7 +93,7 @@ public class ToolCastingRecipe extends PartSwapCastingRecipe implements IMultiRe
       return canPartSwap(inv);
     }
     // no tool match? need to check cast and fluid
-    if (!this.getCast().test(cast)) {
+    if (!this.testCast(cast)) {
       return false;
     }
     // if we have a material item input, must have exactly 2 materials, else exactly 1

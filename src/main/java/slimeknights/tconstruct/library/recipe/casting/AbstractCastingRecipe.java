@@ -11,6 +11,8 @@ import slimeknights.mantle.data.loadable.field.LoadableField;
 import slimeknights.mantle.data.loadable.primitive.BooleanLoadable;
 import slimeknights.tconstruct.library.json.field.CompatIngredientField;
 
+import net.minecraft.world.item.ItemStack;
+
 import javax.annotation.Nonnull;
 
 /** Shared logic between item and material casting */
@@ -41,6 +43,20 @@ public abstract class AbstractCastingRecipe implements ICastingRecipe {
     this.cast = cast;
     this.consumed = consumed;
     this.switchSlots = switchSlots;
+  }
+
+  /**
+   * Tests if the given item stack matches the cast ingredient.
+   * In Minecraft 1.21+, {@code Ingredient.EMPTY.test(ItemStack.EMPTY)} returns {@code false},
+   * which breaks recipes that have no cast (e.g. basin casting). This method handles that case:
+   * if the cast is empty, the test passes only if the stack is also empty.
+   */
+  protected boolean testCast(ItemStack stack) {
+    Ingredient castIngredient = getCast();
+    if (castIngredient.isEmpty()) {
+      return stack.isEmpty();
+    }
+    return castIngredient.test(stack);
   }
 
   @Override

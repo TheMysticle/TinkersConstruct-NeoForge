@@ -124,7 +124,7 @@ public class ItemCastingRecipe extends AbstractCastingRecipe implements IDisplay
 
   @Override
   public boolean matches(ICastingContainer inv, Level worldIn) {
-    return getCast().test(inv.getStack()) && fluid.test(inv.getFluid());
+    return testCast(inv.getStack()) && fluid.test(inv.getFluid());
   }
 
   @Override
